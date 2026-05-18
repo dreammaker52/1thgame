@@ -563,36 +563,86 @@
                 // 序章：重生
                 prologue: {
                     id: 'prologue',
-                    location: '序章 - 重生的黎明',
-                    image: 'https://images.unsplash.com/photo-1517783999520-f068d7431a60?w=1200',
-                    text: `剧烈的头痛袭来，我猛然睁开双眼。
+                    location: '序章 - 重生归来',
+                    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200',
+                    text: `头痛欲裂，我猛地睁开眼睛。
 
-冰冷的地板，昏暗的房间，窗外还是那熟悉的夜色。
+刺眼的灯光让我瞬间清醒——这不是冰封世界里那间冰冷的避难所！
 
-我颤抖着看向手机屏幕——日期让我心脏几乎停止跳动。
+我颤抖着拿起手机，屏幕上的日期让我浑身发抖：
 
-**距离寒潮爆发，还有三天。**
+**2050年11月28日 晚上11:47**
 
-上一世的记忆如潮水般涌来：无尽的冰雪、崩塌的文明、绝望的求生......最终，我在饥寒交迫中失去了意识。
+**距离全球冰封爆发，还有三天。**
 
-但现在，我重生了。
+上一世的记忆如同冰冷的潮水般涌来：
+- 零下八十度的极寒
+- 为了半块发霉面包而互相残杀的人们
+- 被信任的邻居背叛，抢走最后一点物资
+- 在无尽的黑暗中，冻饿而死的绝望......
 
-我必须抓紧这最后的三天时间。`,
+不！我重生了！
+
+这一次，我绝不会重蹈覆辙！`,
                     textType: 'narrator',
                     choices: [
                         {
-                            text: '检查自己的身体状态',
-                            type: 'explore',
+                            text: '检查身体，确认是否觉醒空间异能',
+                            type: 'ability',
                             next: 'check_body'
                         },
                         {
-                            text: '立刻起身清点家中物资',
-                            type: 'explore',
+                            text: '立刻清点家中现有物资',
+                            type: 'supply',
                             next: 'check_supplies'
                         },
                         {
-                            text: '回忆前世的记忆和信息',
-                            type: 'explore',
+                            text: '回忆前世关键信息，制定计划',
+                            type: 'plan',
+                            next: 'remember_past'
+                        },
+                        {
+                            text: '打开新闻，确认当前时间线',
+                            type: 'info',
+                            next: 'check_news'
+                        }
+                    ]
+                },
+
+                check_news: {
+                    id: 'check_news',
+                    location: '查看新闻',
+                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200',
+                    text: `我打开电视，新闻正在播报：
+
+"据气象部门报道，近期全球气温出现异常波动，专家称这是正常气候现象......"
+
+"联合国环境署表示，太阳活动处于正常范围内，市民无需恐慌......"
+
+**他们还在隐瞒！**
+
+上一世，直到寒潮爆发前一天，官方还在宣称一切正常。
+
+但我知道，三天后，太阳将开始熄灭，全球气温会在24小时内骤降至零下六十度！
+
+我关掉电视，眼中闪过一丝冰冷的决绝。
+
+是时候开始行动了。`,
+                    textType: 'narrator',
+                    choices: [
+                        {
+                            text: '检查身体觉醒异能',
+                            type: 'ability',
+                            next: 'check_body'
+                        },
+                        {
+                            text: '清点物资，开始囤货计划',
+                            type: 'supply',
+                            next: 'check_supplies'
+                        },
+                        {
+                            text: '回忆前世关键信息',
+                            type: 'plan',
                             next: 'remember_past'
                         }
                     ]
@@ -600,31 +650,44 @@
 
                 check_body: {
                     id: 'check_body',
-                    location: '重生后的身体',
-                    image: 'https://images.unsplash.com/photo-1557308520-9c98cb70f5a5?w=1200',
-                    text: `我低头看着自己的双手——温暖、完整、充满力量。
+                    location: '觉醒空间异能',
+                    image: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=1200',
+                    text: `我闭上眼睛，集中精神感受体内的力量。
 
-这不是在冰雪中冻得发紫、满身冻疮的手。
+一股奇异的波动从丹田处升起，迅速扩散到全身。
 
-我能感受到体内有一股奇异的力量在流动，仿佛空间本身都在回应我的意志。
+**嗡——**
 
-**空间异能——正在觉醒。**
+意识海中，一个无边无际的空间缓缓展开！
 
-我深吸一口气，尝试集中精神。眼前的空间似乎微微扭曲，一个巨大的储物空间在意识中展开。
+这是我的**随身空间**！
 
-这个空间......比我预想的还要庞大得多！`,
+空间内部时间静止，物资可以永久保鲜。
+
+更神奇的是，空间似乎没有上限，无论多少物资都能装下！
+
+**空间异能觉醒！等级：Lv.1**
+
+上一世，我直到末日中期才觉醒这个能力，错过了最佳的囤货时机。
+
+但这一世......我要把全世界的物资都收入囊中！`,
                     textType: 'narrator',
                     effect: { ability: '空间异能', abilityLevel: 1 },
                     choices: [
                         {
-                            text: '激动不已，立刻测试异能的储物功能',
-                            type: 'explore',
+                            text: '测试储物功能，将家中现有物资收入空间',
+                            type: 'ability',
                             next: 'test_ability'
                         },
                         {
-                            text: '冷静下来，先制定详细的生存计划',
+                            text: '冷静制定囤货和安全屋建设计划',
                             type: 'plan',
                             next: 'make_plan'
+                        },
+                        {
+                            text: '回忆前世关键信息，确定安全屋选址',
+                            type: 'info',
+                            next: 'remember_past'
                         }
                     ]
                 },
@@ -635,27 +698,35 @@
                     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200',
                     text: `我快步走向厨房和储物间，开始清点现有物资。
 
-打开冰箱——有些剩饭剩菜、几瓶饮料、一点蔬菜。
+冰箱里：一些剩菜、几瓶可乐、半盒鸡蛋
+柜子里：5包方便面、10公斤大米、6罐罐头、2桶食用油
+阳台上：几箱矿泉水、一些过冬衣物
 
-柜子里有几包方便面、半袋大米、几罐罐头。
+**这点物资，在末日中撑不过三天！**
 
-这些......远远不够。
+上一世的记忆清晰无比：
+- 三天后，气温骤降至零下60度
+- 电力系统崩溃，自来水冻结
+- 城市陷入混乱，超市被洗劫一空
 
-上一世的记忆告诉我，寒潮来临时气温会骤降到零下百度左右。更糟糕的是，电力会迅速中断，暖气将成为奢望。
-
-我必须在天亮后立即出门采购大量物资。`,
+我必须立刻行动！`,
                     textType: 'narrator',
-                    effect: { supplies: { '方便面': 3, '大米': 5, '罐头': 2 } },
+                    effect: { supplies: { '方便面': 5, '大米': 10, '罐头': 6, '矿泉水': 24 } },
                     choices: [
                         {
-                            text: '列出必须采购的物资清单',
+                            text: '列出详细囤货清单',
                             type: 'plan',
                             next: 'make_plan'
                         },
                         {
-                            text: '先尝试觉醒体内的异能',
-                            type: 'explore',
-                            next: 'test_ability'
+                            text: '尝试觉醒空间异能',
+                            type: 'ability',
+                            next: 'check_body'
+                        },
+                        {
+                            text: '回忆前世信息，确定安全屋选址',
+                            type: 'info',
+                            next: 'remember_past'
                         }
                     ]
                 },
@@ -664,48 +735,66 @@
                     id: 'remember_past',
                     location: '前世的记忆',
                     image: 'https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?w=1200',
-                    text: `我闭上眼睛，努力回忆前世的种种。
+                    text: `我闭上眼睛，前世的记忆如潮水般涌来：
 
-寒潮爆发的第一天：政府发布紧急警报，但无人重视。
+**末日时间线：**
+- **第1天（12月1日）**：气温骤降至-40°C，电力系统开始崩溃
+- **第3天**：城市陷入混乱，超市被洗劫，暴徒横行
+- **第7天**：气温-80°C，90%人类死亡，变异冰兽出现
+- **第30天**：幸存者建立地下避难所，异能者开始觉醒
 
-第二天：气温骤降到零下四十度，开始出现大规模停电。
+**关键信息：**
+- **安全屋选址**：城南别墅区3号栋，那里有天然地下防空洞
+- **物资点**：西郊批发市场、医药公司仓库、军用物资储备库
+- **危险人物**：邻居王强（会带人抢劫）、前女友林小雨（自私背叛）
+- **机遇**：市中心医院有大量药品，武器店有猎枪
 
-第三天：道路被冰雪封锁，城市陷入混乱。
-
-一周后：室外气温已降至零下一百度，幸存者寥寥无几。
-
-我还记得有几个幸存者后来觉醒了异能......那些抢夺物资的掠夺者......地下避难所的传言......
-
-这些信息，将在末日中变得无比珍贵。`,
+这些信息，是我重生最大的财富！`,
                     textType: 'narrator',
                     effect: { knowledge: true },
                     choices: [
                         {
-                            text: '用这些信息制定求生计划',
+                            text: '制定详细求生计划',
                             type: 'plan',
                             next: 'make_plan'
                         },
                         {
-                            text: '立即行动，连夜开始囤积物资',
+                            text: '立即开始囤货',
                             type: 'action',
                             next: 'start_hoarding'
+                        },
+                        {
+                            text: '先去安全屋选址查看',
+                            type: 'action',
+                            next: 'find_safehouse'
+                        },
+                        {
+                            text: '觉醒空间异能',
+                            type: 'ability',
+                            next: 'check_body'
                         }
                     ]
                 },
 
                 test_ability: {
                     id: 'test_ability',
-                    location: '异能觉醒',
+                    location: '测试空间异能',
                     image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1200',
-                    text: `我集中精神，感受体内那股奇异的力量。
+                    text: `我集中精神，尝试将桌上的水杯收入空间。
 
-刹那间，眼前的空气微微扭曲。一个巨大的空间门户在我面前开启——这正是我的异能：**储物空间**。
+**嗡——**
 
-我尝试着将手边的一本书放入空间......成功了！书本瞬间消失，出现在那个神秘的空间中。
+水杯瞬间消失，出现在我的意识空间中！
 
-更令人惊喜的是，这个空间比我预想的还要巨大！这简直是一个移动的超级仓库！
+我又尝试了更大的物品——沙发、冰箱、甚至汽车！
 
-**异能觉醒：空间储物（Lv.1）**`,
+全部成功！空间似乎没有上限！
+
+更神奇的是，空间内时间静止，放入的食物永远不会变质！
+
+**空间异能 Lv.1 掌握！**
+
+现在，我拥有了末世最强金手指！`,
                     textType: 'narrator',
                     effect: { ability: '空间储物', abilityLevel: 1 },
                     choices: [
@@ -715,9 +804,14 @@
                             next: 'start_hoarding'
                         },
                         {
-                            text: '先规划好需要采购什么',
+                            text: '制定详细囤货计划',
                             type: 'plan',
                             next: 'make_plan'
+                        },
+                        {
+                            text: '前往安全屋选址',
+                            type: 'action',
+                            next: 'find_safehouse'
                         }
                     ]
                 },
@@ -726,19 +820,91 @@
                     id: 'make_plan',
                     location: '制定计划',
                     image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200',
-                    text: `我找来纸笔，开始制定详细的计划。
+                    text: `我打开电脑，开始制定详细的生存计划：
 
-**首要任务：囤积物资**
+**【囤货清单】**
+- 食物：大米10吨、面粉5吨、罐头1000罐、方便面500箱、压缩饼干100箱
+- 水源：矿泉水1000箱、净水设备2套
+- 燃料：煤炭5吨、汽油1000升、柴油500升、酒精块500块
+- 药品：感冒药、退烧药、消炎药、抗生素、冻伤膏各1000份
+- 防寒：羽绒服50件、保暖内衣100套、雪地靴30双
+- 武器：猎枪2支、子弹500发、工兵铲10把、刀具20把
+- 工具：发电机5台、太阳能板10块、电池1000节
 
-1. 食物：方便面、罐头、压缩饼干、干粮、纯净水
-2. 取暖：暖宝宝、保温毯、燃料（酒精块、煤炭）
-3. 药品：感冒药、退烧药、消炎药、冻伤膏
-4. 防寒：羽绒服、保暖内衣、帽子、手套、围巾
-5. 工具：手电筒、电池、打火机、绳索、工具箱
+**【安全屋建设】**
+- 选址：城南别墅区3号栋（带地下防空洞）
+- 改造：加固门窗、安装保温层、建立独立发电系统
 
-**次要任务：寻找或建立安全屋**
+**【时间安排】**
+- 第一天：采购食物和水
+- 第二天：采购燃料、药品、武器
+- 第三天：完成安全屋改造，转移物资
 
-**最终目标：在冰封世界中活下去**
+现在，开始行动！`,
+                    textType: 'narrator',
+                    effect: { plan: true },
+                    choices: [
+                        {
+                            text: '立即前往超市囤货',
+                            type: 'action',
+                            next: 'supermarket'
+                        },
+                        {
+                            text: '先去医药公司采购药品',
+                            type: 'action',
+                            next: 'pharmacy'
+                        },
+                        {
+                            text: '前往安全屋选址',
+                            type: 'action',
+                            next: 'find_safehouse'
+                        },
+                        {
+                            text: '先去银行取钱/贷款',
+                            type: 'action',
+                            next: 'get_money'
+                        }
+                    ]
+                },
+
+                get_money: {
+                    id: 'get_money',
+                    location: '筹集资金',
+                    image: 'https://images.unsplash.com/photo-1507791740864-471b1911d57e?w=1200',
+                    text: `囤货需要大量资金。我打开手机银行，账户里只有几十万存款。
+
+不够！远远不够！
+
+我立刻开始操作：
+1. 抵押父母留下的市中心房产，贷款500万
+2. 卖掉股票和理财产品，套现200万
+3. 申请多张信用卡，套现300万
+
+**总共筹集：1000万+**
+
+上一世，这些钱在末日中毫无用处。
+
+但现在，它们将变成我生存的资本！`,
+                    textType: 'narrator',
+                    effect: { money: 10000000 },
+                    choices: [
+                        {
+                            text: '前往超市囤货',
+                            type: 'action',
+                            next: 'supermarket'
+                        },
+                        {
+                            text: '前往医药公司',
+                            type: 'action',
+                            next: 'pharmacy'
+                        },
+                        {
+                            text: '前往户外用品店',
+                            type: 'action',
+                            next: 'outdoor_shop'
+                        }
+                    ]
+                },
 
 写完计划，天边已经泛起鱼肚白。行动的时候到了。`,
                     textType: 'narrator',
@@ -764,175 +930,283 @@
 
                 start_hoarding: {
                     id: 'start_hoarding',
-                    location: '连夜行动',
+                    location: '连夜囤货',
                     image: 'https://images.unsplash.com/photo-1530866495561-507c9faab2ed?w=1200',
                     text: `时间紧迫，我必须立即行动！
 
-披上外套，拿上钱包和手机，我冲出了家门。
+凌晨三点，我开着车直奔西郊批发市场。
 
-深夜的街道格外冷清，但我知道这份宁静即将被打破。
+这里是全市最大的批发市场，种类齐全，价格便宜。
 
-我直奔24小时便利店，用现金疯狂采购——方便面、罐头、饼干、矿泉水......
+我找到批发商，直接包下了：
+- 大米10吨
+- 面粉5吨
+- 方便面500箱
+- 各类罐头1000罐
+- 矿泉水2000箱
 
-便利店的店员用奇怪的眼神看着我，但我顾不上那么多。
+"老板，你这是要开粮店啊？"批发商惊讶地问。
 
-**还剩三天。每一分钟都至关重要。**`,
+"比开粮店更重要。"我淡淡地说。
+
+付款后，我直接将所有物资收入空间。`,
                     textType: 'narrator',
-                    effect: { supplies: { '方便面': 10, '罐头': 5, '矿泉水': 10, '饼干': 3 } },
+                    effect: {
+                        supplies: {
+                            '大米': 10000,
+                            '面粉': 5000,
+                            '方便面': 500,
+                            '罐头': 1000,
+                            '矿泉水': 2000
+                        }
+                    },
                     choices: [
                         {
-                            text: '继续去超市大批量采购',
+                            text: '继续采购药品',
                             type: 'action',
-                            next: 'supermarket'
+                            next: 'pharmacy'
                         },
                         {
-                            text: '回家整理物资，明天再去别处',
+                            text: '采购燃料和取暖设备',
                             type: 'action',
-                            next: 'organize_supplies'
+                            next: 'buy_fuel'
+                        },
+                        {
+                            text: '采购武器和工具',
+                            type: 'action',
+                            next: 'hardware_store'
+                        },
+                        {
+                            text: '采购防寒装备',
+                            type: 'action',
+                            next: 'outdoor_shop'
                         }
                     ]
                 },
 
                 supermarket: {
                     id: 'supermarket',
-                    location: '永辉超市',
+                    location: '大型超市',
                     image: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=1200',
-                    text: `清晨七点，超市刚开门。
+                    text: `超市刚开门，我直接开始"清仓"模式。
 
-我没有浪费时间在货架间闲逛，而是直接开始"清仓"模式。
+推着购物车，我快速扫荡：
+- **食物区**：方便面100箱、压缩饼干50箱、罐头200罐
+- **调味品区**：盐50包、糖30包、食用油20桶
+- **日用品区**：卫生纸100提、湿巾50包、垃圾袋100卷
+- **零食区**：巧克力、牛肉干、能量棒各100份
 
-推着购物车，我快速扫荡着物资区：
-- **食物区**：方便面30包、压缩饼干20盒、罐头50罐、纯净水100瓶
-- **调味品区**：盐、糖、食用油
-- **日用品区**：湿巾、垃圾袋、保暖毯
+收银员看着堆积如山的物资，眼睛都直了。
 
-收银员目瞪口呆地看着我堆积如山的购物车。
+"先生，需要帮忙送货吗？"
 
-"先生，您这是......要开超市吗？"
-
-我只是笑笑，继续刷卡。`,
+"不用。"我直接刷卡，将所有物资收入空间。`,
                     textType: 'narrator',
                     effect: {
                         supplies: {
-                            '方便面': 30,
-                            '压缩饼干': 20,
-                            '罐头': 50,
-                            '纯净水': 100,
-                            '盐': 5,
-                            '食用油': 3,
-                            '保暖毯': 2
-                        },
-                        money: -3000
+                            '方便面': 100,
+                            '压缩饼干': 50,
+                            '罐头': 200,
+                            '盐': 50,
+                            '食用油': 20,
+                            '卫生纸': 100,
+                            '巧克力': 100,
+                            '牛肉干': 100
+                        }
                     },
                     choices: [
                         {
-                            text: '前往药店采购药品',
+                            text: '前往医药公司',
                             type: 'action',
-                            next: 'pharmacy',
-                            good: true
+                            next: 'pharmacy'
                         },
                         {
-                            text: '去户外用品店购买专业装备',
+                            text: '前往户外用品店',
                             type: 'action',
                             next: 'outdoor_shop'
                         },
                         {
-                            text: '回家整理物资，休息一下',
+                            text: '前往五金店',
                             type: 'action',
-                            next: 'organize_supplies'
+                            next: 'hardware_store'
+                        },
+                        {
+                            text: '前往加油站',
+                            type: 'action',
+                            next: 'buy_fuel'
                         }
                     ]
                 },
 
                 pharmacy: {
                     id: 'pharmacy',
-                    location: '大药房',
+                    location: '医药公司仓库',
                     image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=1200',
-                    text: `药房里弥漫着消毒水的味道。
+                    text: `我直接找到了医药公司的仓库。
 
-我快速找到所需药品区域，开始搜集：
+出示了提前准备好的"医院采购单"，仓库管理员带我进入了药品存储区。
 
-- **退烧药**：布洛芬、阿司匹林
-- **感冒药**：白加黑、感冒灵
-- **消炎药**：阿莫西林、头孢
-- **冻伤药**：冻疮膏、维生素E
-- **绷带、酒精、碘伏**
+**开始大规模采购：**
+- **抗生素**：阿莫西林、头孢、红霉素各500盒
+- **感冒药**：各类感冒药1000盒
+- **退烧药**：布洛芬、对乙酰氨基酚各500盒
+- **冻伤药**：冻疮膏1000支、防冻剂500瓶
+- **医疗用品**：绷带500卷、碘伏100瓶、酒精50瓶、注射器200支
+- **急救包**：专业急救包100个
 
-"先生，您要这么多药？"药剂师疑惑地问。
+"你们医院要这么多药？"管理员疑惑地问。
 
-"家里有老人，备着以防万一。"我平静地回答。
+"流感季快到了，提前备货。"我随口说道。
 
-刷完医保卡，又一笔不小的开支。但比起末日中药品的稀缺，这点钱根本不算什么。`,
+**药品采购完成！**`,
                     textType: 'narrator',
                     effect: {
                         supplies: {
-                            '退烧药': 10,
-                            '感冒药': 10,
-                            '消炎药': 8,
-                            '冻伤膏': 5,
-                            '医疗包': 3
-                        },
-                        money: -1500
+                            '抗生素': 500,
+                            '感冒药': 1000,
+                            '退烧药': 500,
+                            '冻伤膏': 1000,
+                            '急救包': 100,
+                            '绷带': 500
+                        }
                     },
                     choices: [
                         {
-                            text: '去五金店购买工具和燃料',
+                            text: '前往户外用品店',
+                            type: 'action',
+                            next: 'outdoor_shop'
+                        },
+                        {
+                            text: '前往加油站采购燃料',
+                            type: 'action',
+                            next: 'buy_fuel'
+                        },
+                        {
+                            text: '前往五金店',
                             type: 'action',
                             next: 'hardware_store'
                         },
                         {
-                            text: '寻找保暖设备',
+                            text: '前往武器店',
                             type: 'action',
-                            next: 'find_warm_gear'
+                            next: 'gun_shop'
+                        }
+                    ]
+                },
+
+                gun_shop: {
+                    id: 'gun_shop',
+                    location: '武器店',
+                    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1200',
+                    text: `在黑市找到了一家武器店。
+
+"要什么？"老板压低声音问。
+
+"猎枪、子弹、刀具。"
+
+老板从柜台下拿出几个箱子：
+- **猎枪**：2支，带瞄准镜
+- **子弹**：500发
+- **军用匕首**：5把
+- **战术刀**：10把
+- **弓弩**：1把，带50支箭
+
+"现金还是转账？"
+
+"现金。"我递过去一叠人民币。
+
+**武器采购完成！**
+
+这些将是我在末日中保护自己的利器。`,
+                    textType: 'narrator',
+                    effect: {
+                        supplies: {
+                            '猎枪': 2,
+                            '子弹': 500,
+                            '匕首': 5,
+                            '战术刀': 10,
+                            '弓弩': 1
+                        }
+                    },
+                    choices: [
+                        {
+                            text: '前往户外用品店',
+                            type: 'action',
+                            next: 'outdoor_shop'
+                        },
+                        {
+                            text: '前往加油站',
+                            type: 'action',
+                            next: 'buy_fuel'
+                        },
+                        {
+                            text: '前往安全屋选址',
+                            type: 'action',
+                            next: 'find_safehouse'
                         }
                     ]
                 },
 
                 outdoor_shop: {
                     id: 'outdoor_shop',
-                    location: '户外探险装备店',
+                    location: '极地装备专卖店',
                     image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=1200',
-                    text: `专业的户外装备店，商品琳琅满目。
+                    text: `这家店专门卖极地探险装备，商品专业且齐全。
 
-我找到了最关键的防寒装备：
+**大规模采购：**
+- **极地防寒服**：50套，极限温度-80°C
+- **羽绒睡袋**：50个，专业级保暖
+- **保暖内衣套装**：100套
+- **雪地靴**：30双，防滑耐磨
+- **保暖手套**：50副
+- **防寒面罩**：50个
+- **头灯**：50个，续航200小时
+- **防风帐篷**：10顶
+- **防滑冰爪**：30副
+- **登山绳**：100米
 
-- **羽绒睡袋**：极限温度-40°C，专业级
-- **防风防寒服**：连体设计，保暖性极佳
-- **保暖手套**：加绒加厚，防风防水
-- **防寒面罩**：保护面部免受冻伤
-- **登山靴**：防滑耐磨，适合雪地行走
-- **头灯**：LED高亮度，续航100小时
-- **防滑冰爪**：冰雪路面行走必备
+老板看着我堆积如山的订单，眼睛都直了。
 
-老板是个资深驴友，向我推荐了各种装备的使用方法。
+"你这是要组织南极考察队吗？"
 
-"兄弟，你要穿越冰川吗？"他好奇地问。
+"比那个更重要。"我淡淡地说。
 
-"......差不多吧。"`,
+**防寒装备采购完成！**`,
                     textType: 'narrator',
                     effect: {
                         supplies: {
-                            '羽绒睡袋': 2,
-                            '防寒服': 2,
-                            '保暖手套': 3,
-                            '防寒面罩': 2,
-                            '登山靴': 2,
-                            '头灯': 3,
-                            '防滑冰爪': 2
-                        },
-                        money: -5000
+                            '防寒服': 50,
+                            '羽绒睡袋': 50,
+                            '保暖内衣': 100,
+                            '雪地靴': 30,
+                            '保暖手套': 50,
+                            '防寒面罩': 50,
+                            '头灯': 50,
+                            '防风帐篷': 10,
+                            '冰爪': 30,
+                            '登山绳': 100
+                        }
                     },
                     choices: [
                         {
-                            text: '继续采购燃料和取暖设备',
+                            text: '前往加油站采购燃料',
                             type: 'action',
-                            next: 'hardware_store',
-                            good: true
+                            next: 'buy_fuel'
                         },
                         {
-                            text: '回家整理所有物资',
+                            text: '前往五金店采购工具',
                             type: 'action',
-                            next: 'organize_supplies'
+                            next: 'hardware_store'
+                        },
+                        {
+                            text: '前往安全屋选址',
+                            type: 'action',
+                            next: 'find_safehouse'
+                        },
+                        {
+                            text: '前往武器店',
+                            type: 'action',
+                            next: 'gun_shop'
                         }
                     ]
                 },
@@ -1078,35 +1352,122 @@
                     id: 'find_safehouse',
                     location: '寻找安全屋',
                     image: 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?w=1200',
-                    text: `安全屋的选择至关重要。
+                    text: `根据前世的记忆，城南别墅区3号栋是最佳选择！
 
-我回忆着前世的记忆，筛选出几个备选地点：
+那里有一个天然的地下防空洞，是建国时期建造的，非常坚固。
 
-1. **郊区独栋别墅**：偏僻但目标明显，容易被掠夺者盯上
-2. **老旧防空洞**：坚固但潮湿，通风不佳
-3. **高层公寓**：视野好但需要大量燃料取暖
-4. **乡下农家院**：偏僻隐蔽，有井水和土地可种植
+我开车来到这里，用提前准备好的钥匙打开了大门。
 
-我在城市中穿梭，考察每个地点的优劣。
+别墅很大，有三层，加上地下两层的防空洞。
 
-最终，一个念头闪过——
+**安全屋选址完成！**
 
-**地下室！** 地下空间温度相对稳定，而且不易被外人发现。
-
-我找到了一个废弃的地下仓库，位置偏僻，空间巨大。`,
+现在需要进行改造：
+1. 加固门窗，安装防弹玻璃
+2. 安装保温层
+3. 建立独立发电系统
+4. 设置防御工事`,
                     textType: 'narrator',
-                    effect: { location: '地下仓库' },
+                    effect: { location: '城南别墅区3号栋' },
                     choices: [
                         {
-                            text: '立即开始改造这个地下仓库',
+                            text: '立即开始改造安全屋',
                             type: 'action',
                             next: 'setup_safehouse',
                             good: true
                         },
                         {
-                            text: '继续寻找更好的地点',
+                            text: '先采购改造材料',
                             type: 'action',
-                            next: 'find_safehouse_better'
+                            next: 'materials_shop'
+                        },
+                        {
+                            text: '继续囤货，改造稍后',
+                            type: 'action',
+                            next: 'supermarket'
+                        },
+                        {
+                            text: '雇佣专业团队改造',
+                            type: 'action',
+                            next: 'hire_workers'
+                        }
+                    ]
+                },
+
+                materials_shop: {
+                    id: 'materials_shop',
+                    location: '建材市场',
+                    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200',
+                    text: `我来到建材市场，采购改造安全屋所需的材料：
+
+- **防弹玻璃**：10块，用于门窗
+- **保温板**：500平方米
+- **钢筋**：2吨
+- **水泥**：10吨
+- **太阳能板**：20块
+- **发电机**：5台
+- **蓄电池**：50个
+- **地热设备**：1套
+
+老板看着我的订单，惊讶地说："你这是要盖碉堡啊？"
+
+"比碉堡更安全。"`,
+                    textType: 'narrator',
+                    effect: {
+                        supplies: {
+                            '防弹玻璃': 10,
+                            '保温板': 500,
+                            '钢筋': 2000,
+                            '水泥': 10000,
+                            '太阳能板': 20,
+                            '发电机': 5,
+                            '蓄电池': 50
+                        }
+                    },
+                    choices: [
+                        {
+                            text: '开始改造安全屋',
+                            type: 'action',
+                            next: 'setup_safehouse'
+                        },
+                        {
+                            text: '雇佣工人',
+                            type: 'action',
+                            next: 'hire_workers'
+                        }
+                    ]
+                },
+
+                hire_workers: {
+                    id: 'hire_workers',
+                    location: '雇佣工人',
+                    image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1200',
+                    text: `我联系了一家建筑公司，开出高额报酬，雇佣了10名工人。
+
+"三天内完成改造，每人十万。"
+
+工人们兴奋地开始工作：
+1. 加固墙体，安装防弹玻璃
+2. 铺设保温层
+3. 安装太阳能板和发电机
+4. 改造地下防空洞
+5. 设置电网和陷阱
+
+**24小时后，改造完成！**
+
+安全屋已经变成了一个固若金汤的堡垒！`,
+                    textType: 'narrator',
+                    effect: { safehouse: 'fortress' },
+                    choices: [
+                        {
+                            text: '开始改造安全屋内部',
+                            type: 'action',
+                            next: 'setup_safehouse'
+                        },
+                        {
+                            text: '继续囤货',
+                            type: 'action',
+                            next: 'supermarket'
                         }
                     ]
                 },
@@ -2473,7 +2834,7 @@
                         {
                             text: '开始第二章',
                             type: 'continue',
-                            next: 'chapter2_start'
+                            next: 'frozen_world_start'
                         }
                     ]
                 },
@@ -2499,19 +2860,16 @@
                         {
                             text: '开始第二章',
                             type: 'continue',
-                            next: 'chapter2_start'
+                            next: 'frozen_world_start'
                         }
                     ]
                 },
 
-                // 第二章开始
-                chapter2_start: {
-                    id: 'chapter2_start',
-                    location: '第二章 - 冰原征途',
+                frozen_world_start: {
+                    id: 'frozen_world_start',
+                    location: '冰封世界',
                     image: 'https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=1200',
-                    text: `**第二章：冰原征途**
-
-冰封世界已经持续了一个月。
+                    text: `冰封世界已经持续了一个月。
 
 我的安全屋运转良好，物资充足。
 
@@ -2524,8 +2882,8 @@
 **整装待发，开始新的旅程。**`,
                     textType: 'narrator',
                     effect: {
-                        chapter: 2,
-                        day: 30
+                        day: 30,
+                        temperature: -95
                     },
                     choices: [
                         {
@@ -2537,6 +2895,153 @@
                             text: '先去寻找其他幸存者',
                             type: 'explore',
                             next: 'find_more_survivors'
+                        },
+                        {
+                            text: '深入修炼空间异能，发掘新技能',
+                            type: 'ability',
+                            next: 'train_advanced_ability'
+                        },
+                        {
+                            text: '搜索城市寻找更多物资和武器',
+                            type: 'action',
+                            next: 'search_city'
+                        }
+                    ]
+                },
+
+                train_advanced_ability: {
+                    id: 'train_advanced_ability',
+                    location: '高级异能修炼',
+                    image: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=1200',
+                    text: `我开始深入修炼空间异能。
+
+通过不断冥想和实践，我逐渐掌握了更多技能：
+
+**空间切割（Lv.2）** - 可以切断空间，产生锋利的空间刃
+**空间屏障（Lv.2）** - 可以制造空间屏障防御攻击
+**空间感知（Lv.1）** - 可以感知周围空间的能量波动
+
+在修炼过程中，我感受到空间异能还有更深层次的力量......
+
+也许，我可以尝试融合其他元素？`,
+                    textType: 'narrator',
+                    effect: {
+                        ability: '空间切割',
+                        abilityLevel: 2,
+                        exp: 10
+                    },
+                    choices: [
+                        {
+                            text: '尝试融合冰元素',
+                            type: 'ability',
+                            next: 'fusion_ice_ability'
+                        },
+                        {
+                            text: '继续提升空间异能等级',
+                            type: 'ability',
+                            next: 'maximize_space_ability'
+                        },
+                        {
+                            text: '出发前往北方',
+                            type: 'action',
+                            next: 'journey_north'
+                        }
+                    ]
+                },
+
+                fusion_ice_ability: {
+                    id: 'fusion_ice_ability',
+                    location: '冰系融合',
+                    image: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=1200',
+                    text: `我尝试将空间异能与冰元素融合......
+
+**嗡——**
+
+一股强大的力量从体内爆发！
+
+**冰空间（Lv.1）** - 可以创造冰封空间，冻结敌人
+**空间冻结（Lv.1）** - 可以冻结空间中的物体
+**冰刃穿梭（Lv.1）** - 可以在冰中进行空间穿梭
+
+我的异能达到了新的境界！`,
+                    textType: 'narrator',
+                    effect: {
+                        ability: '冰空间',
+                        abilityLevel: 1,
+                        exp: 15
+                    },
+                    choices: [
+                        {
+                            text: '继续修炼',
+                            type: 'ability',
+                            next: 'train_advanced_ability'
+                        },
+                        {
+                            text: '出发前往北方',
+                            type: 'action',
+                            next: 'journey_north'
+                        }
+                    ]
+                },
+
+                maximize_space_ability: {
+                    id: 'maximize_space_ability',
+                    location: '空间最大化',
+                    image: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=1200',
+                    text: `我继续专注于空间异能的提升。
+
+**空间压缩（Lv.3）** - 可以压缩空间，制造黑洞般的引力
+**空间跳跃（Lv.3）** - 可以进行长距离空间跳跃
+**空间领域（Lv.1）** - 可以创造自己的空间领域
+
+我的空间异能达到了前所未有的高度！`,
+                    textType: 'narrator',
+                    effect: {
+                        ability: '空间领域',
+                        abilityLevel: 3,
+                        exp: 20
+                    },
+                    choices: [
+                        {
+                            text: '继续修炼',
+                            type: 'ability',
+                            next: 'train_advanced_ability'
+                        },
+                        {
+                            text: '出发前往北方',
+                            type: 'action',
+                            next: 'journey_north'
+                        }
+                    ]
+                },
+
+                search_city: {
+                    id: 'search_city',
+                    location: '搜索城市',
+                    image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200',
+                    text: `我开始搜索城市的废墟。
+
+在一个废弃的研究所里，我发现了一些有趣的东西：
+- **实验报告**：关于寒潮成因的研究
+- **武器图纸**：一些先进武器的设计图
+- **能量核心**：一个神秘的能量装置
+
+这些发现让我对寒潮的成因产生了更多疑问......`,
+                    textType: 'narrator',
+                    effect: {
+                        supplies: { '能量核心': 1 },
+                        exp: 10
+                    },
+                    choices: [
+                        {
+                            text: '出发前往北方',
+                            type: 'action',
+                            next: 'journey_north'
+                        },
+                        {
+                            text: '研究能量核心',
+                            type: 'action',
+                            next: 'study_core'
                         }
                     ]
                 },
@@ -2710,6 +3215,7 @@
                             type: 'action',
                             next: 'explore_cave'
                         }
+                        、
                     ]
                 },
 
@@ -3690,13 +4196,280 @@
                     choices: []
                 },
 
+                // ==================== 大结局 ====================
+
+                final_chapter_start: {
+                    id: 'final_chapter_start',
+                    location: '最终章：星辰归途',
+                    image: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1200',
+                    text: `**最终章：星辰归途**
+
+十年后......
+
+冰封的世界正在缓慢复苏。
+
+我站在安全屋的瞭望塔上，看着远处正在重建的城市。
+
+林雪、小雨、老张......所有曾经并肩作战的伙伴都在这里。
+
+人类文明，终于在废墟中找到了新的希望。
+
+但我知道，这只是开始。
+
+远古遗迹中的秘密，高维文明的存在，都在呼唤着我......`,
+                    textType: 'narrator',
+                    choices: [
+                        {
+                            text: '前往远古遗迹，揭开最终秘密',
+                            type: 'action',
+                            next: 'final_secret'
+                        },
+                        {
+                            text: '继续领导幸存者联盟',
+                            type: 'action',
+                            next: 'lead_alliance'
+                        },
+                        {
+                            text: '寻找其他幸存者基地',
+                            type: 'action',
+                            next: 'find_other_bases'
+                        },
+                        {
+                            text: '闭关修炼，突破终极异能',
+                            type: 'ability',
+                            next: 'final_evolution'
+                        }
+                    ]
+                },
+
+                final_secret: {
+                    id: 'final_secret',
+                    location: '远古秘密',
+                    image: 'https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?w=1200',
+                    text: `我再次来到远古遗迹。
+
+这一次，我已经足够强大。
+
+核心晶体散发出耀眼的光芒，一段段信息涌入我的脑海......
+
+原来，这场寒潮并非自然灾难，而是高维文明的实验！
+
+他们在测试人类的生存极限，观察文明的韧性。
+
+而我，成为了他们选中的"观测对象"。
+
+"你有两个选择，"一个声音在脑海中响起，"成为我们的一员，或者......"`,
+                    textType: 'narrator',
+                    choices: [
+                        {
+                            text: '拒绝高维文明，守护人类',
+                            type: 'good',
+                            next: 'reject_high_dimension'
+                        },
+                        {
+                            text: '接受邀请，成为更高维度的存在',
+                            type: 'choice',
+                            next: 'accept_ascension'
+                        },
+                        {
+                            text: '谈判，为人类争取权益',
+                            type: 'negotiate',
+                            next: 'negotiate_with_gods'
+                        }
+                    ]
+                },
+
+                reject_high_dimension: {
+                    id: 'reject_high_dimension',
+                    location: '守护人类',
+                    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200',
+                    text: `"我拒绝。"
+
+我的回答坚定而清晰。
+
+"人类不需要被实验，我们有自己的路要走。"
+
+高维存在似乎有些意外，但也带着一丝赞赏。
+
+"有趣......那就让我们看看，人类能走多远。"
+
+一道光芒笼罩了地球，寒潮开始消退，阳光重新照耀大地。
+
+**人类赢得了生存的权利！**`,
+                    textType: 'narrator',
+                    choices: [
+                        {
+                            text: '迎接新世界',
+                            type: 'action',
+                            next: 'new_world_beginning'
+                        }
+                    ]
+                },
+
+                accept_ascension: {
+                    id: 'accept_ascension',
+                    location: '超越维度',
+                    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200',
+                    text: `我选择接受。
+
+一道耀眼的光芒将我包裹，身体开始发生蜕变。
+
+我感受到了前所未有的力量，超越了时间和空间的限制。
+
+但在最后一刻，我回头看了一眼蓝色的星球。
+
+也许有一天，我会以新的形态回来......
+
+**【飞升结局：维度超越者】**`,
+                    textType: 'narrator',
+                    effect: { ending: 'ascension' },
+                    choices: []
+                },
+
+                negotiate_with_gods: {
+                    id: 'negotiate_with_gods',
+                    location: '与神对话',
+                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200',
+                    text: `"我可以接受成为你们的一员，但有一个条件。"
+
+"说。"
+
+"让地球恢复原样，让人类自由发展。"
+
+高维存在沉默了很久。
+
+"......可以。但你必须成为我们的使者，在必要时引导人类。"
+
+我点头同意。
+
+寒潮退去，阳光重新照耀大地。
+
+而我，成为了连接两个维度的桥梁。
+
+**【使者结局：维度使者】**`,
+                    textType: 'narrator',
+                    effect: { ending: 'messenger' },
+                    choices: []
+                },
+
+                lead_alliance: {
+                    id: 'lead_alliance',
+                    location: '领导联盟',
+                    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200',
+                    text: `我选择继续领导幸存者联盟。
+
+在我的带领下，人类文明开始快速复苏：
+- 重建城市和基础设施
+- 建立新的政府和法律体系
+- 发展科技，探索新能源
+- 与其他幸存者基地建立联系
+
+十年后，一个崭新的国家在废墟上崛起。
+
+我站在新首都的城墙上，看着繁荣的景象。
+
+**人类文明，迎来了新的纪元！**
+
+**【领袖结局：新纪元开创者】**`,
+                    textType: 'narrator',
+                    effect: { ending: 'leader' },
+                    choices: []
+                },
+
+                find_other_bases: {
+                    id: 'find_other_bases',
+                    location: '寻找其他基地',
+                    image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200',
+                    text: `我驾驶着改造过的雪地车，开始寻找其他幸存者基地。
+
+一路上，我发现了：
+- 北方的军事避难所，有上千幸存者
+- 沿海的海上基地，利用地热生存
+- 甚至还有一个地下城市，建立在废弃的矿洞中
+
+我与他们建立了联系，形成了一个庞大的幸存者网络。
+
+人类，不再孤单。
+
+**【探索者结局：人类纽带】**`,
+                    textType: 'narrator',
+                    effect: { ending: 'explorer' },
+                    choices: []
+                },
+
+                final_evolution: {
+                    id: 'final_evolution',
+                    location: '终极进化',
+                    image: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=1200',
+                    text: `我选择闭关修炼，突破空间异能的极限。
+
+在无尽的冥想中，我感受到了空间的本质。
+
+**空间异能突破！Lv.MAX！**
+
+我获得了创造空间的能力，可以创造独立的位面！
+
+我用这个能力创造了一个温暖、安全的新世界，带领所有幸存者迁移过去。
+
+在这个新世界里，没有寒冷，没有饥饿，只有希望。
+
+**【创世结局：新世界创造者】**`,
+                    textType: 'narrator',
+                    effect: { ending: 'creator' },
+                    choices: []
+                },
+
+                new_world_beginning: {
+                    id: 'new_world_beginning',
+                    location: '新世界的开始',
+                    image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200',
+                    text: `**大结局：星辰归途**
+
+阳光重新照耀大地，冰雪开始融化。
+
+十年的冰封岁月终于结束。
+
+我站在重建的城市中，看着人们忙碌的身影。
+
+林雪成为了新政府的科技部长，小雨已经长大，成为了一名医生。
+
+老张的幸存者营地发展成了一座城市。
+
+而我，选择了一个新的身份——一个普通的公民。
+
+经历了这么多，我终于可以过上平静的生活了。
+
+但我知道，只要人类文明存在，就永远不会缺少挑战。
+
+也许有一天，高维存在会再次出现。
+
+也许有一天，新的危机将会到来。
+
+但那都是以后的事了。
+
+现在，让我们享受这来之不易的和平吧。
+
+**人类，终将走向星辰大海！**
+
+**【大结局：星辰归途】**`,
+                    textType: 'narrator',
+                    effect: {
+                        ending: 'true_ending',
+                        victory: true
+                    },
+                    choices: []
+                },
+
+                // 备用结局
                 guardian_ending: {
                     id: 'guardian_ending',
                     location: '守护者结局',
                     image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1200',
-                    text: `我成为了这个世界的守护者。
+                    text: `**结局：冰原守望者**
 
-独自居住在遗迹附近，守护着这份远古的力量。
+我选择守护这片土地。
+
+独自居住在北方的冰原上，守护着远古遗迹的秘密。
 
 时不时地，我会帮助那些遇到困难的幸存者。
 
@@ -3708,13 +4481,10 @@
 
 **【守护者结局】**`,
                     textType: 'narrator',
-                    effect: {
-                        ending: 'guardian'
-                    },
+                    effect: { ending: 'guardian' },
                     choices: []
                 },
 
-                // 结局剧情
                 good_ending: {
                     id: 'good_ending',
                     location: '希望的曙光',
@@ -3737,10 +4507,7 @@
 
 **【好结局】**`,
                     textType: 'narrator',
-                    effect: {
-                        ending: 'good',
-                        victory: true
-                    },
+                    effect: { ending: 'good', victory: true },
                     choices: []
                 },
 
@@ -3766,9 +4533,7 @@
 
 **【普通结局】**`,
                     textType: 'narrator',
-                    effect: {
-                        ending: 'normal'
-                    },
+                    effect: { ending: 'normal' },
                     choices: []
                 },
 
