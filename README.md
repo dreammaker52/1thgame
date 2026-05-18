@@ -1100,13 +1100,45 @@
                         {
                             text: '立即开始改造这个地下仓库',
                             type: 'action',
-                            next: '改造仓库',
+                            next: 'setup_safehouse',
                             good: true
                         },
                         {
                             text: '继续寻找更好的地点',
                             type: 'action',
-                            next: 'continue_search'
+                            next: 'find_safehouse_better'
+                        }
+                    ]
+                },
+
+                find_safehouse_better: {
+                    id: 'find_safehouse_better',
+                    location: '继续寻找',
+                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200',
+                    text: `我决定继续寻找更好的安全屋。
+
+在城市中继续探索，我发现了一个更好的选择——
+
+**地铁站地下商城！**
+
+这里空间巨大，可以容纳更多人，而且有现成的基础设施。
+
+更重要的是，这里靠近水源和通风系统。
+
+这是一个理想的避难所！`,
+                    textType: 'narrator',
+                    effect: { location: '地铁站' },
+                    choices: [
+                        {
+                            text: '开始改造地铁站',
+                            type: 'action',
+                            next: 'setup_safehouse',
+                            good: true
+                        },
+                        {
+                            text: '还是回到之前的地下仓库',
+                            type: 'action',
+                            next: 'setup_safehouse'
                         }
                     ]
                 },
@@ -1279,6 +1311,87 @@
                     ]
                 },
 
+                upgrade_safehouse: {
+                    id: 'upgrade_safehouse',
+                    location: '升级安全屋',
+                    image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1200',
+                    text: `我继续完善安全屋。
+
+安装了太阳能电池板和风力发电机，确保有稳定的电力供应。
+建造了简易的净水系统，可以将冰雪融化后净化饮用。
+设置了陷阱和防御工事，防止不速之客闯入。
+
+**安全屋升级完成！**
+
+现在这里已经是一个功能完善的避难所了。`,
+                    textType: 'narrator',
+                    effect: { day: 2 },
+                    choices: [
+                        {
+                            text: '休息一晚，准备迎接寒潮',
+                            type: 'action',
+                            next: 'day3_final'
+                        },
+                        {
+                            text: '再去采购一些物资',
+                            type: 'action',
+                            next: 'final_hoarding'
+                        }
+                    ]
+                },
+
+                final_hoarding: {
+                    id: 'final_hoarding',
+                    location: '最后的囤货',
+                    image: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=1200',
+                    text: `我再次出门，进行最后的物资采购。
+
+在这最后的时间里，我采购了：
+- 更多的食物和水
+- 备用电池和充电设备
+- 加固安全屋的材料
+- 一些书籍和娱乐用品
+
+街上已经开始出现恐慌的迹象，物价也在飞涨。
+
+但我已经准备好了。`,
+                    textType: 'narrator',
+                    effect: {
+                        supplies: { '方便面': 20, '罐头': 20, '纯净水': 50 },
+                        day: 2
+                    },
+                    choices: [
+                        {
+                            text: '返回安全屋',
+                            type: 'action',
+                            next: 'day3_final'
+                        }
+                    ]
+                },
+
+                buy_electronics: {
+                    id: 'buy_electronics',
+                    location: '电子设备',
+                    image: 'https://images.unsplash.com/photo-1510519138101-570d1dca3d66?w=1200',
+                    text: `我购买了一些关键的电子设备：
+
+- 太阳能充电器和大容量充电宝
+- 对讲机和收音机
+- 便携式投影仪（用于娱乐）
+- 备用手机和电池
+
+这些设备在末日中会非常有用。`,
+                    textType: 'narrator',
+                    effect: { supplies: { '充电宝': 5, '对讲机': 2 } },
+                    choices: [
+                        {
+                            text: '返回安全屋',
+                            type: 'action',
+                            next: 'day3_final'
+                        }
+                    ]
+                },
+
                 buy_fuel: {
                     id: 'buy_fuel',
                     location: '燃料采购',
@@ -1322,6 +1435,63 @@
                 },
 
                 // 第三天剧情
+                final_risk: {
+                    id: 'final_risk',
+                    location: '最后的冒险',
+                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200',
+                    text: `我决定冒一次险，在寒潮来临前最后出去一趟。
+
+街上已经乱成一团，人们疯狂抢购物资。
+
+我利用空间异能快速穿梭，收集了一些遗漏的重要物资。
+
+就在我准备离开时，看到一个小女孩在寒风中瑟瑟发抖。
+
+她的父母似乎失散了。`,
+                    textType: 'narrator',
+                    effect: { supplies: { '医疗包': 2 }, karma: 5 },
+                    choices: [
+                        {
+                            text: '带上小女孩一起走',
+                            type: 'good',
+                            next: 'rescue_child',
+                            good: true
+                        },
+                        {
+                            text: '自己离开，顾不上她',
+                            type: 'evil',
+                            next: 'final_check',
+                            evil: true
+                        }
+                    ]
+                },
+
+                rescue_child: {
+                    id: 'rescue_child',
+                    location: '救助小女孩',
+                    image: 'https://images.unsplash.com/photo-1541481069435-967c78b91743?w=1200',
+                    text: `我抱起小女孩，用异能快速返回安全屋。
+
+"别怕，我会保护你的。"
+
+小女孩紧紧抓住我的衣服，眼中充满了恐惧。
+
+她叫小雨，今年七岁。她的父母在混乱中走失了。
+
+也许，她的父母已经......
+
+我决定照顾她，让她成为这个末日中我要保护的人。`,
+                    textType: 'narrator',
+                    effect: { allies: ['小雨'], karma: 15 },
+                    choices: [
+                        {
+                            text: '继续剧情',
+                            type: 'action',
+                            next: 'freeze_begins'
+                        }
+                    ]
+                },
+
                 day3_final: {
                     id: 'day3_final',
                     location: '第三天 - 最后一天',
@@ -1539,6 +1709,35 @@
                     ]
                 },
 
+                day3_wait: {
+                    id: 'day3_wait',
+                    location: '第三天 - 等待',
+                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200',
+                    text: `我选择继续等待。
+
+在安全屋里，我整理物资、修炼异能，为未来做准备。
+
+时间一天天过去，气温继续下降。
+
+**气温：-105°C**
+
+窗外的风雪似乎没有减弱的迹象。
+
+但我已经准备好了。`,
+                    textType: 'narrator',
+                    effect: {
+                        day: 3,
+                        temperature: -105
+                    },
+                    choices: [
+                        {
+                            text: '出门探索',
+                            type: 'action',
+                            next: 'first_explore'
+                        }
+                    ]
+                },
+
                 day2_freeze: {
                     id: 'day2_freeze',
                     location: '第二天 - 极寒',
@@ -1577,6 +1776,62 @@
                             text: '是时候出去探索了',
                             type: 'action',
                             next: 'first_explore'
+                        }
+                    ]
+                },
+
+                study_beast: {
+                    id: 'study_beast',
+                    location: '研究冰兽',
+                    image: 'https://images.unsplash.com/photo-1557308520-9c98cb70f5a5?w=1200',
+                    text: `我开始研究这些变异冰兽的习性。
+
+根据前世的记忆和这次的遭遇，我总结出一些规律：
+
+1. **弱点**：它们虽然耐寒，但似乎害怕高温和强光
+2. **习性**：喜欢在黑暗中活动，听觉和嗅觉异常灵敏
+3. **攻击方式**：主要依靠利爪和冰霜吐息
+
+也许，我可以利用这些弱点来对付它们。`,
+                    textType: 'narrator',
+                    effect: { exp: 5 },
+                    choices: [
+                        {
+                            text: '继续修炼异能',
+                            type: 'action',
+                            next: 'train_ability'
+                        },
+                        {
+                            text: '再次外出探索',
+                            type: 'action',
+                            next: 'first_explore'
+                        }
+                    ]
+                },
+
+                rest_and_plan: {
+                    id: 'rest_and_plan',
+                    location: '休整计划',
+                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200',
+                    text: `我回到安全屋，整理收获并制定新的计划。
+
+目前的物资足够支撑一段时间，但我需要寻找更多资源。
+
+也许，是时候去寻找其他幸存者了。
+
+或者，我可以尝试寻找那个传说中的地下避难所......`,
+                    textType: 'narrator',
+                    effect: { day: 1 },
+                    choices: [
+                        {
+                            text: '寻找幸存者',
+                            type: 'action',
+                            next: 'find_survivors'
+                        },
+                        {
+                            text: '修炼异能',
+                            type: 'action',
+                            next: 'train_ability'
                         }
                     ]
                 },
@@ -1807,6 +2062,32 @@
                     ]
                 },
 
+                explore_more: {
+                    id: 'explore_more',
+                    location: '继续探索',
+                    image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200',
+                    text: `我继续在冰封的城市中探索。
+
+在一个废弃的商场里，我发现了一些遗漏的物资：
+- 更多的食物和水
+- 一些日用品
+- 甚至还有一些种子（也许未来可以种植）
+
+在探索过程中，我还发现了一些关于寒潮的研究资料......`,
+                    textType: 'narrator',
+                    effect: {
+                        supplies: { '种子': 10, '罐头': 5 },
+                        exp: 5
+                    },
+                    choices: [
+                        {
+                            text: '返回安全屋',
+                            type: 'action',
+                            next: 'rest_and_plan'
+                        }
+                    ]
+                },
+
                 find_survivors: {
                     id: 'find_survivors',
                     location: '寻找幸存者',
@@ -1923,6 +2204,113 @@
                     ]
                 },
 
+                share_supplies: {
+                    id: 'share_supplies',
+                    location: '分享物资',
+                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200',
+                    text: `我决定分享一部分物资给营地。
+
+从空间异能中取出食物、药品和燃料，分给那些需要的人。
+
+"这......这太感谢你了！"老张激动地说。
+
+看着人们感激的眼神，我感受到了一种久违的温暖。
+
+也许，在这个末日中，人与人之间的信任和互助，才是真正的希望。`,
+                    textType: 'narrator',
+                    effect: {
+                        karma: 20,
+                        supplies: { '方便面': -10, '罐头': -5, '医疗包': -2 }
+                    },
+                    choices: [
+                        {
+                            text: '帮助营地加强防御',
+                            type: 'action',
+                            next: 'help_defense'
+                        },
+                        {
+                            text: '离开营地，继续探索',
+                            type: 'action',
+                            next: 'arsenal'
+                        }
+                    ]
+                },
+
+                help_defense: {
+                    id: 'help_defense',
+                    location: '加强防御',
+                    image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1200',
+                    text: `我用空间异能帮助营地加强防御。
+
+在营地周围设置了陷阱和预警系统，用冰块建造了坚固的防御墙。
+
+幸存者们对我的能力感到惊叹。
+
+"有你在，我们安全多了。"老张说。
+
+也许，这里可以成为一个真正的避难所......`,
+                    textType: 'narrator',
+                    effect: {
+                        karma: 10,
+                        exp: 5
+                    },
+                    choices: [
+                        {
+                            text: '离开营地，去军火库探索',
+                            type: 'action',
+                            next: 'arsenal'
+                        }
+                    ]
+                },
+
+                solo_path: {
+                    id: 'solo_path',
+                    location: '独自之路',
+                    image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200',
+                    text: `我选择继续独自生存。
+
+在这个末日中，独自行动更加灵活，可以更快地探索和收集物资。
+
+我告别了老张的营地，继续我的旅程。`,
+                    textType: 'narrator',
+                    effect: { solo: true },
+                    choices: [
+                        {
+                            text: '前往军火库',
+                            type: 'action',
+                            next: 'arsenal'
+                        },
+                        {
+                            text: '继续探索',
+                            type: 'action',
+                            next: 'first_explore'
+                        }
+                    ]
+                },
+
+                continue_alone: {
+                    id: 'continue_alone',
+                    location: '独自探索',
+                    image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200',
+                    text: `我继续独自在冰封的世界中探索。
+
+没有同伴，但也没有背叛的风险。
+
+在废墟中，我找到了更多物资和一些关于寒潮的线索......`,
+                    textType: 'narrator',
+                    effect: {
+                        supplies: { '罐头': 3 },
+                        exp: 5
+                    },
+                    choices: [
+                        {
+                            text: '前往军火库',
+                            type: 'action',
+                            next: 'arsenal'
+                        }
+                    ]
+                },
+
                 leave_camp: {
                     id: 'leave_camp',
                     location: '独自离去',
@@ -2034,6 +2422,33 @@
                     ]
                 },
 
+                deep_explore_arsenal: {
+                    id: 'deep_explore_arsenal',
+                    location: '深入军火库',
+                    image: 'https://images.unsplash.com/photo-1569230516306-5a8cb5586399?w=1200',
+                    text: `我决定继续深入探索军火库。
+
+在更深处，我发现了一个隐藏的地下室。
+
+这里存放着更先进的武器和一些研究资料......
+
+资料显示，在寒潮来临之前，这里曾进行过一项秘密研究。
+
+也许，这和寒潮的爆发有关？`,
+                    textType: 'narrator',
+                    effect: {
+                        supplies: { '弹药': 30 },
+                        exp: 10
+                    },
+                    choices: [
+                        {
+                            text: '返回安全屋研究资料',
+                            type: 'action',
+                            next: 'return_with_weapons'
+                        }
+                    ]
+                },
+
                 return_with_weapons: {
                     id: 'return_with_weapons',
                     location: '满载而归',
@@ -2053,6 +2468,32 @@
                     effect: {
                         chapter: 1,
                         complete: true
+                    },
+                    choices: [
+                        {
+                            text: '开始第二章',
+                            type: 'continue',
+                            next: 'chapter2_start'
+                        }
+                    ]
+                },
+
+                explore_new_ability: {
+                    id: 'explore_new_ability',
+                    location: '新能力探索',
+                    image: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=1200',
+                    text: `我开始探索新获得的空间闪烁能力。
+
+通过不断练习，我发现可以进行更远距离的瞬移。
+
+而且，我似乎还能感知到空间中的能量波动......
+
+也许，还有更多的能力等待我去发掘。`,
+                    textType: 'narrator',
+                    effect: {
+                        ability: '空间闪烁',
+                        abilityLevel: 2,
+                        exp: 5
                     },
                     choices: [
                         {
@@ -2100,6 +2541,33 @@
                     ]
                 },
 
+                find_more_survivors: {
+                    id: 'find_more_survivors',
+                    location: '寻找更多幸存者',
+                    image: 'https://images.unsplash.com/photo-1529257414772-1960b7bea4eb?w=1200',
+                    text: `我决定先寻找更多幸存者。
+
+在冰封的城市中，我发现了更多的幸存者营地。
+
+有的营地秩序井然，有的则陷入混乱。
+
+通过交流，我了解到各地的情况都很艰难，但也有人找到了生存的方法。`,
+                    textType: 'narrator',
+                    effect: { exp: 5 },
+                    choices: [
+                        {
+                            text: '继续向北探索',
+                            type: 'action',
+                            next: 'journey_north'
+                        },
+                        {
+                            text: '建立幸存者联盟',
+                            type: 'action',
+                            next: 'build_alliance'
+                        }
+                    ]
+                },
+
                 journey_north: {
                     id: 'journey_north',
                     location: '冰封荒原',
@@ -2138,6 +2606,55 @@
                     ]
                 },
 
+                find_alternate_path: {
+                    id: 'find_alternate_path',
+                    location: '寻找通路',
+                    image: 'https://images.unsplash.com/photo-1478719059408-592965723cbc?w=1200',
+                    text: `我决定绕路寻找其他通路。
+
+走了很长一段路，终于找到了一个可以通过的地方。
+
+虽然路程更远，但更加安全。
+
+继续前进，山洞入口越来越近了......`,
+                    textType: 'narrator',
+                    effect: { health: -5 },
+                    choices: [
+                        {
+                            text: '进入山洞',
+                            type: 'action',
+                            next: 'explore_cave'
+                        }
+                    ]
+                },
+
+                jump_gap: {
+                    id: 'jump_gap',
+                    location: '冒险跳跃',
+                    image: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=1200',
+                    text: `我深吸一口气，助跑，跳跃！
+
+在空中的瞬间，我感受到了死亡的威胁。
+
+**成功了！**
+
+我稳稳地落在了对面。
+
+虽然有些惊险，但节省了不少时间。`,
+                    textType: 'narrator',
+                    effect: {
+                        health: -10,
+                        exp: 5
+                    },
+                    choices: [
+                        {
+                            text: '进入山洞',
+                            type: 'action',
+                            next: 'explore_cave'
+                        }
+                    ]
+                },
+
                 use_space_ability: {
                     id: 'use_space_ability',
                     location: '异能跨越',
@@ -2170,6 +2687,58 @@
                             text: '谨慎地在外围观察',
                             type: 'cautious',
                             next: 'observe_cave'
+                        }
+                    ]
+                },
+
+                observe_cave: {
+                    id: 'observe_cave',
+                    location: '观察山洞',
+                    image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=1200',
+                    text: `我谨慎地在外围观察。
+
+山洞里似乎没有危险，但我不能掉以轻心。
+
+从远处观察，我发现山洞深处有微弱的光芒。
+
+也许，那里有什么特别的东西......`,
+                    textType: 'narrator',
+                    effect: { exp: 3 },
+                    choices: [
+                        {
+                            text: '进入山洞',
+                            type: 'action',
+                            next: 'explore_cave'
+                        }
+                    ]
+                },
+
+                search_temple: {
+                    id: 'search_temple',
+                    location: '探索遗迹',
+                    image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=1200',
+                    text: `我在遗迹中搜索，寻找更多关于这个古代文明的信息。
+
+在一面墙上，我发现了一些壁画和文字。
+
+根据我的解读，这里曾经是一个研究"空间能量"的地方。
+
+也许，寒潮的爆发和这里有关？`,
+                    textType: 'narrator',
+                    effect: {
+                        exp: 10,
+                        knowledge: '古代文明'
+                    },
+                    choices: [
+                        {
+                            text: '观察晶体',
+                            type: 'action',
+                            next: 'observe_crystal'
+                        },
+                        {
+                            text: '继续深入探索',
+                            type: 'action',
+                            next: 'deep_explore_temple'
                         }
                     ]
                 },
@@ -2283,6 +2852,72 @@
                     ]
                 },
 
+                continue_observe: {
+                    id: 'continue_observe',
+                    location: '继续观察',
+                    image: 'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=1200',
+                    text: `我继续暗中观察。
+
+那个女子小心翼翼地收集着晶体，看起来对这个地方很熟悉。
+
+她似乎在寻找什么特定的东西......
+
+突然，她停了下来，似乎发现了什么。
+
+"找到了......"她轻声说。
+
+她从怀里拿出一个古老的盒子，似乎要将什么东西放进去......`,
+                    textType: 'narrator',
+                    effect: { stealth: true },
+                    choices: [
+                        {
+                            text: '现身询问',
+                            type: 'action',
+                            next: 'meet_newcomer'
+                        },
+                        {
+                            text: '继续观察',
+                            type: 'action',
+                            next: 'continue_observe'
+                        }
+                    ]
+                },
+
+                rob_her: {
+                    id: 'rob_her',
+                    location: '抢夺',
+                    image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200',
+                    text: `我趁她不备，发动空间异能！
+
+**空间束缚！**
+
+她被空间之力困住，无法动弹。
+
+"你......你想干什么？"她惊恐地问。
+
+我拿走了她的物资和晶体，然后解除了束缚。
+
+"滚。"我说。
+
+她不敢反抗，转身跑掉了。
+
+看着她的背影，我心中没有任何波澜。
+
+在这个世界，弱肉强食。`,
+                    textType: 'narrator',
+                    effect: {
+                        karma: -30,
+                        supplies: { '晶体': 5, '罐头': 5 }
+                    },
+                    choices: [
+                        {
+                            text: '继续探索',
+                            type: 'action',
+                            next: 'collect_crystals'
+                        }
+                    ]
+                },
+
                 hide_and_watch: {
                     id: 'hide_and_watch',
                     location: '暗中观察',
@@ -2316,6 +2951,31 @@
                             type: 'evil',
                             next: 'rob_her',
                             evil: true
+                        }
+                    ]
+                },
+
+                share_and_leave: {
+                    id: 'share_and_leave',
+                    location: '分享后离开',
+                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200',
+                    text: `我和林雪分享了一些物资和信息。
+
+"谢谢你，"她说，"也许有一天，我们还会再见面。"
+
+我们互相留下了联系方式，然后各自离开。
+
+也许，在这个末日中，多一个朋友不是坏事......`,
+                    textType: 'narrator',
+                    effect: {
+                        karma: 10,
+                        allies: ['林雪']
+                    },
+                    choices: [
+                        {
+                            text: '继续探索遗迹',
+                            type: 'action',
+                            next: 'collect_crystals'
                         }
                     ]
                 },
@@ -2386,6 +3046,38 @@
                             text: '谨慎研究，不贸然触碰',
                             type: 'cautious',
                             next: 'study_core'
+                        }
+                    ]
+                },
+
+                study_core: {
+                    id: 'study_core',
+                    location: '研究核心',
+                    image: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=1200',
+                    text: `我决定谨慎研究，不贸然触碰。
+
+通过林雪的专业知识和我的空间感知能力，我们发现了一些惊人的事实：
+
+1. 这块晶体是远古文明的能量核心
+2. 寒潮的爆发可能与这个核心的能量波动有关
+3. 触碰它可能会带来巨大的力量，但也可能引发灾难
+
+也许，我们需要找到更多的线索......`,
+                    textType: 'narrator',
+                    effect: {
+                        exp: 10,
+                        knowledge: '核心秘密'
+                    },
+                    choices: [
+                        {
+                            text: '决定触碰核心',
+                            type: 'action',
+                            next: 'touch_core'
+                        },
+                        {
+                            text: '返回地面寻找更多线索',
+                            type: 'action',
+                            next: 'return_to_surface'
                         }
                     ]
                 },
