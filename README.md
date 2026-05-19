@@ -123,6 +123,27 @@
             gap: 8px;
         }
 
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .upgrade-btn {
+            transition: all 0.2s ease;
+        }
+
+        .upgrade-btn:not(:disabled):hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px currentColor;
+        }
+
         .panel-title::before {
             content: '';
             width: 8px;
@@ -592,7 +613,7 @@
             padding: 20px;
             border-radius: 15px;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -611,13 +632,41 @@
             z-index: 0;
         }
 
+        .map-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .map-card:hover::after {
+            opacity: 1;
+            animation: holographic-sweep 2s ease-in-out infinite;
+        }
+
+        @keyframes holographic-sweep {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
         .map-card > * {
             position: relative;
             z-index: 1;
         }
 
         .map-card:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-10px) scale(1.05);
+        }
+
+        .map-card:active {
+            transform: translateY(-5px) scale(0.98);
         }
 
         .map-card.map1 {
@@ -690,6 +739,30 @@
             font-size: 12px;
             color: #aaa;
             line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .map-hint {
+            font-size: 11px;
+            color: #00ffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 12px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            display: inline-block;
+            background: rgba(0, 255, 255, 0.1);
+            animation: pulse-hint 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-hint {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .map-card:hover .map-hint {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
         }
 
         .map-card.selected {
@@ -805,13 +878,12 @@
                 <div class="difficulty-desc">极高挑战<br>敌人数量增加40%<br>血量增加35%<br>资源获取减少15%</div>
             </div>
         </div>
-        <button class="start-btn" id="start-game-btn" onclick="goToMapSelect()" disabled>请选择难度</button>
     </div>
 
     <div id="map-select-screen">
         <button class="back-btn" onclick="goBackToDifficulty()">← 返回选择难度</button>
         <div class="title">选择战场</div>
-        <div class="subtitle">选择你的防御阵地</div>
+        <div class="subtitle">点击地图开始游戏</div>
         <div class="map-container">
             <div class="map-card map1" onclick="selectMap(0)">
                 <div class="map-thumbnail map1">
@@ -819,6 +891,7 @@
                 </div>
                 <div class="map-name">Neon Metropolis</div>
                 <div class="map-desc">霓虹都市<br>紫蓝主色调，高楼林立<br>路径弯曲复杂</div>
+                <div class="map-hint">点击开始</div>
             </div>
             <div class="map-card map2" onclick="selectMap(1)">
                 <div class="map-thumbnail map2">
@@ -826,6 +899,7 @@
                 </div>
                 <div class="map-name">Cyber Wasteland</div>
                 <div class="map-desc">赛博废土<br>橙红暗灰主色调<br>路径长且有分支</div>
+                <div class="map-hint">点击开始</div>
             </div>
             <div class="map-card map3" onclick="selectMap(2)">
                 <div class="map-thumbnail map3">
@@ -833,9 +907,9 @@
                 </div>
                 <div class="map-name">Orbital Station</div>
                 <div class="map-desc">轨道空间站<br>青白主色调<br>路径含环形结构</div>
+                <div class="map-hint">点击开始</div>
             </div>
         </div>
-        <button class="start-btn" id="start-game-from-map-btn" onclick="startGameFromMap()" disabled>请选择地图</button>
     </div>
 
     <div id="game-over-screen">
@@ -1132,15 +1206,12 @@
                 card.classList.remove('selected');
             });
             document.querySelector('.difficulty-card.' + difficulty).classList.add('selected');
-            document.getElementById('start-game-btn').disabled = false;
-            document.getElementById('start-game-btn').textContent = '继续选择地图';
-        }
-
-        function goToMapSelect() {
-            if (!selectedDifficulty) return;
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('map-select-screen').style.display = 'flex';
-            drawMapPreviews();
+            
+            setTimeout(() => {
+                document.getElementById('start-screen').style.display = 'none';
+                document.getElementById('map-select-screen').style.display = 'flex';
+                drawMapPreviews();
+            }, 300);
         }
 
         function goBackToDifficulty() {
@@ -1150,8 +1221,6 @@
             document.querySelectorAll('.map-card').forEach(card => {
                 card.classList.remove('selected');
             });
-            document.getElementById('start-game-from-map-btn').disabled = true;
-            document.getElementById('start-game-from-map-btn').textContent = '请选择地图';
         }
 
         function selectMap(mapIndex) {
@@ -1159,9 +1228,12 @@
             document.querySelectorAll('.map-card').forEach(card => {
                 card.classList.remove('selected');
             });
-            document.querySelectorAll('.map-card')[mapIndex].classList.add('selected');
-            document.getElementById('start-game-from-map-btn').disabled = false;
-            document.getElementById('start-game-from-map-btn').textContent = '开始游戏';
+            const selectedCard = document.querySelectorAll('.map-card')[mapIndex];
+            selectedCard.classList.add('selected');
+            
+            setTimeout(() => {
+                startGameFromMap(mapIndex);
+            }, 300);
         }
 
         function drawMapPreviews() {
@@ -1211,12 +1283,13 @@
             });
         }
 
-        function startGameFromMap() {
-            if (!selectedDifficulty || selectedMap === null) return;
+        function startGameFromMap(mapIndex) {
+            const mapIdx = mapIndex !== undefined ? mapIndex : selectedMap;
+            if (!selectedDifficulty || mapIdx === null) return;
             
             document.getElementById('map-select-screen').style.display = 'none';
             game.difficulty = selectedDifficulty;
-            game.currentMap = selectedMap;
+            game.currentMap = mapIdx;
             const diffConfig = DIFFICULTY_CONFIG[game.difficulty];
             
             game.canvas = document.getElementById('game-canvas');
@@ -1332,19 +1405,34 @@
 
         function handleCanvasClick(e) {
             const rect = game.canvas.getBoundingClientRect();
-            const x = Math.floor((e.clientX - rect.left) / TILE_SIZE);
-            const y = Math.floor((e.clientY - rect.top) / TILE_SIZE);
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+            const gridX = Math.floor(clickX / TILE_SIZE);
+            const gridY = Math.floor(clickY / TILE_SIZE);
 
-            if (x < 0 || x >= GRID_WIDTH || y < 0 || y >= GRID_HEIGHT) return;
+            if (gridX < 0 || gridX >= GRID_WIDTH || gridY < 0 || gridY >= GRID_HEIGHT) return;
 
-            const clickedTower = game.towers.find(t => t.x === x && t.y === y);
+            let clickedTower = null;
+            
+            for (const tower of game.towers) {
+                const towerCenterX = tower.x * TILE_SIZE + TILE_SIZE / 2;
+                const towerCenterY = tower.y * TILE_SIZE + TILE_SIZE / 2;
+                const dx = clickX - towerCenterX;
+                const dy = clickY - towerCenterY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < TILE_SIZE * 0.8) {
+                    clickedTower = tower;
+                    break;
+                }
+            }
 
-            if (game.selectedTowerType && game.grid[y][x] === 0) {
+            if (game.selectedTowerType && game.grid[gridY][gridX] === 0) {
                 const towerData = TOWER_TYPES[game.selectedTowerType];
                 if (game.credits >= towerData.cost) {
                     game.credits -= towerData.cost;
                     const newTower = {
-                        x, y,
+                        x: gridX, y: gridY,
                         type: game.selectedTowerType,
                         level: 0,
                         damage: towerData.damage,
@@ -1355,8 +1443,8 @@
                         targetAngle: 0
                     };
                     game.towers.push(newTower);
-                    game.grid[y][x] = 2;
-                    createParticles(x * TILE_SIZE + TILE_SIZE/2, y * TILE_SIZE + TILE_SIZE/2, towerData.color, 20);
+                    game.grid[gridY][gridX] = 2;
+                    createParticles(gridX * TILE_SIZE + TILE_SIZE/2, gridY * TILE_SIZE + TILE_SIZE/2, towerData.color, 20);
                     updateUI();
                 }
             } else if (clickedTower) {
@@ -1394,6 +1482,7 @@
 
             const canUpgrade = tower.level < 3;
             const upgradeCost = canUpgrade ? towerData.upgrades[tower.level].cost : 0;
+            const canAfford = game.credits >= upgradeCost;
             const fireRateText = tower.fireRate < 400 ? '极快' : tower.fireRate < 800 ? '快速' : tower.fireRate < 1200 ? '中速' : '慢速';
 
             stats.innerHTML = `
@@ -1403,13 +1492,40 @@
             `;
 
             if (canUpgrade) {
-                stats.innerHTML += `<div style="margin-top: 8px; color: #ffd700;">升级费用: ${upgradeCost}</div>`;
+                const nextUpgrade = towerData.upgrades[tower.level];
+                const nextDamage = tower.damage + nextUpgrade.damageBonus;
+                const nextRange = tower.range + nextUpgrade.rangeBonus;
+                const nextFireRate = tower.fireRate + nextUpgrade.fireRateBonus;
+                const nextFireRateText = nextFireRate < 400 ? '极快' : nextFireRate < 800 ? '快速' : nextFireRate < 1200 ? '中速' : '慢速';
+                
+                stats.innerHTML += `
+                    <div class="upgrade-preview" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0, 255, 255, 0.2);">
+                        <div style="font-size: 11px; color: #00ffff; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">升级到 Lv.${tower.level + 2}</div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 4px; font-size: 12px;">
+                            <div style="color: #888;">伤害:</div>
+                            <div style="color: #ff6600;">${tower.damage} → <span style="color: #00ff00;">${nextDamage}</span></div>
+                            <div style="color: #888;">范围:</div>
+                            <div style="color: #ff6600;">${tower.range} → <span style="color: #00ff00;">${nextRange}</span></div>
+                            <div style="color: #888;">射速:</div>
+                            <div style="color: #ff6600;">${fireRateText} → <span style="color: #00ff00;">${nextFireRateText}</span></div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 13px; font-weight: bold;">
+                            <span style="color: #${canAfford ? 'ffd700' : 'ff4444'}">💰 ${upgradeCost}</span>
+                            ${canAfford ? '<span style="color: #00ff00;">✓ 可升级</span>' : '<span style="color: #ff4444;">✗ 资源不足</span>'}
+                        </div>
+                    </div>
+                `;
             } else {
-                stats.innerHTML += `<div style="margin-top: 8px; color: #00ff00;">已达满级</div>`;
+                stats.innerHTML += `<div style="margin-top: 8px; color: #00ff00; text-align: center; padding: 8px; background: rgba(0, 255, 0, 0.1); border-radius: 5px;">✓ 已达满级</div>`;
             }
 
-            upgradeBtn.disabled = !canUpgrade || game.credits < upgradeCost;
-            upgradeBtn.textContent = canUpgrade ? `升级 Lv.${tower.level + 2}` : '已满级';
+            const isDisabled = !canUpgrade || !canAfford;
+            upgradeBtn.disabled = isDisabled;
+            upgradeBtn.textContent = canUpgrade ? (canAfford ? `升级 Lv.${tower.level + 2}` : '能量不足') : '已满级';
+            upgradeBtn.style.background = canAfford ? '' : 'linear-gradient(135deg, #442222, #663333)';
+            upgradeBtn.style.borderColor = canAfford ? towerData.color : '#ff4444';
+            upgradeBtn.style.opacity = isDisabled ? 0.6 : 1;
+            upgradeBtn.style.cursor = isDisabled ? 'not-allowed' : 'pointer';
 
             panel.classList.add('active');
         }
@@ -1419,9 +1535,16 @@
             const tower = game.selectedTower;
             const towerData = TOWER_TYPES[tower.type];
 
-            if (tower.level >= towerData.upgrades.length) return;
+            if (tower.level >= towerData.upgrades.length) {
+                showUpgradeMessage('已达满级！', '#ffd700');
+                return;
+            }
+            
             const upgrade = towerData.upgrades[tower.level];
-            if (game.credits < upgrade.cost) return;
+            if (game.credits < upgrade.cost) {
+                showUpgradeMessage('能量不足！', '#ff4444');
+                return;
+            }
 
             game.credits -= upgrade.cost;
             tower.level++;
@@ -1429,9 +1552,36 @@
             tower.range += upgrade.rangeBonus;
             tower.fireRate += upgrade.fireRateBonus;
 
-            createParticles(tower.x * TILE_SIZE + TILE_SIZE/2, tower.y * TILE_SIZE + TILE_SIZE/2, '#ffd700', 30);
+            createParticles(tower.x * TILE_SIZE + TILE_SIZE/2, tower.y * TILE_SIZE + TILE_SIZE/2, '#ffd700', 40);
             showTowerInfo(tower);
             updateUI();
+            showUpgradeMessage('升级成功！', '#00ff00');
+        }
+
+        function showUpgradeMessage(message, color) {
+            const messageEl = document.createElement('div');
+            messageEl.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 15px 30px;
+                background: rgba(0, 0, 0, 0.8);
+                border: 2px solid ${color};
+                border-radius: 10px;
+                color: ${color};
+                font-size: 18px;
+                font-weight: bold;
+                text-shadow: 0 0 10px ${color};
+                z-index: 1000;
+                animation: fadeInOut 1.5s ease-in-out forwards;
+            `;
+            messageEl.textContent = message;
+            document.body.appendChild(messageEl);
+
+            setTimeout(() => {
+                document.body.removeChild(messageEl);
+            }, 1500);
         }
 
         function sellTower() {
@@ -1887,6 +2037,23 @@
                 ctx.save();
                 ctx.translate(x, y);
 
+                if (game.selectedTower === tower) {
+                    const pulse = Math.sin(Date.now() / 200) * 0.3 + 0.7;
+                    ctx.shadowColor = '#00ffff';
+                    ctx.shadowBlur = 30 * pulse;
+                    ctx.strokeStyle = '#00ffff';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, size + 25, 0, Math.PI * 2);
+                    ctx.stroke();
+                    
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, size + 28 + pulse * 5, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+
                 const outerGlow = ctx.createRadialGradient(0, 0, size, 0, 0, size + 20);
                 outerGlow.addColorStop(0, `${towerData.color}40`);
                 outerGlow.addColorStop(1, 'transparent');
@@ -2051,6 +2218,35 @@
 
                 ctx.restore();
                 ctx.restore();
+
+                if (tower.level < 3) {
+                    const upgradeCost = towerData.upgrades[tower.level].cost;
+                    if (game.credits >= upgradeCost) {
+                        const arrowY = y - TILE_SIZE / 2 - 15;
+                        const pulse = Math.sin(Date.now() / 300) * 0.2 + 1;
+                        
+                        ctx.save();
+                        ctx.translate(x, arrowY);
+                        ctx.scale(pulse, pulse);
+                        
+                        ctx.shadowColor = '#ffd700';
+                        ctx.shadowBlur = 10;
+                        ctx.fillStyle = '#ffd700';
+                        
+                        ctx.beginPath();
+                        ctx.moveTo(0, -12);
+                        ctx.lineTo(-8, 0);
+                        ctx.lineTo(-4, 0);
+                        ctx.lineTo(-4, 8);
+                        ctx.lineTo(4, 8);
+                        ctx.lineTo(4, 0);
+                        ctx.lineTo(8, 0);
+                        ctx.closePath();
+                        ctx.fill();
+                        
+                        ctx.restore();
+                    }
+                }
             });
 
             game.enemies.forEach(enemy => {
