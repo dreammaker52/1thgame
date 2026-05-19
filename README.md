@@ -2,10 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#0a0a1a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>赛博防线 - Cyber Defense</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -13,7 +10,6 @@
         body {
             background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a1a2a 100%);
             color: #00ffff;
-            touch-action: manipulation;
         }
 
         #game-container {
@@ -21,7 +17,7 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            min-width: 1200px;
         }
 
         .header {
@@ -84,7 +80,6 @@
             flex: 1;
             display: flex;
             overflow: hidden;
-            position: relative;
         }
 
         #game-canvas {
@@ -93,59 +88,19 @@
             cursor: crosshair;
             image-rendering: pixelated;
             image-rendering: crisp-edges;
-            background: #0a0a1a;
         }
 
         .sidebar {
-            width: 320px;
-            min-width: 280px;
-            max-width: 360px;
+            width: 340px;
+            min-width: 340px;
             background: linear-gradient(180deg, rgba(20, 10, 40, 0.95), rgba(10, 20, 40, 0.95));
             border-left: 2px solid rgba(0, 255, 255, 0.3);
-            padding: 12px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             overflow-y: auto;
             flex-shrink: 0;
-            z-index: 10;
-        }
-
-        .sidebar-toggle {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 60px;
-            background: rgba(0, 255, 255, 0.2);
-            border: 1px solid rgba(0, 255, 255, 0.5);
-            border-right: none;
-            border-radius: 5px 0 0 5px;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 20;
-            transition: all 0.3s;
-        }
-
-        .sidebar-toggle:hover {
-            background: rgba(0, 255, 255, 0.4);
-        }
-
-        .sidebar-toggle span {
-            color: #00ffff;
-            font-size: 16px;
-        }
-
-        .sidebar.collapsed {
-            width: 0;
-            min-width: 0;
-            max-width: 0;
-            padding: 0;
-            border: none;
-            overflow: hidden;
         }
 
         .panel {
@@ -900,128 +855,6 @@
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
         ::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.5); border-radius: 2px; }
-
-        @media screen and (max-width: 768px), screen and (max-height: 480px) {
-            .header h1 {
-                font-size: 18px;
-            }
-
-            .header {
-                padding: 8px 12px;
-            }
-
-            .sidebar {
-                width: 260px;
-                min-width: 260px;
-                padding: 10px;
-            }
-
-            .panel {
-                padding: 10px;
-            }
-
-            .panel-title {
-                font-size: 11px;
-            }
-
-            .tower-card {
-                padding: 10px;
-            }
-
-            .tower-card h3 {
-                font-size: 13px;
-            }
-
-            .tower-card .price {
-                font-size: 12px;
-            }
-
-            .difficulty-container, .map-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .difficulty-card, .map-card {
-                width: 280px;
-                padding: 15px;
-            }
-
-            .title {
-                font-size: 36px;
-            }
-
-            .subtitle {
-                font-size: 14px;
-            }
-        }
-
-        @media screen and (max-width: 640px) {
-            .sidebar {
-                width: 240px;
-                min-width: 240px;
-            }
-
-            .sidebar-toggle {
-                display: flex;
-            }
-
-            .game-ui {
-                padding: 5px 10px;
-                font-size: 12px;
-            }
-
-            .wave-info {
-                font-size: 12px;
-            }
-
-            .health-bar {
-                width: 100px;
-                height: 15px;
-            }
-        }
-
-        @media screen and (orientation: landscape) and (max-height: 500px) {
-            .sidebar {
-                width: 220px;
-                min-width: 220px;
-            }
-
-            .header h1 {
-                font-size: 16px;
-            }
-
-            .difficulty-card, .map-card {
-                width: 200px;
-                padding: 12px;
-            }
-
-            .difficulty-name, .map-name {
-                font-size: 14px;
-            }
-
-            .difficulty-desc, .map-desc {
-                font-size: 11px;
-            }
-        }
-
-        @media screen and (max-height: 320px) {
-            .difficulty-container, .map-container {
-                gap: 10px;
-            }
-
-            .difficulty-card, .map-card {
-                width: 180px;
-                padding: 10px;
-            }
-
-            .title {
-                font-size: 28px;
-            }
-
-            .subtitle {
-                font-size: 12px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -1108,12 +941,8 @@
 
         <div class="main-content">
             <canvas id="game-canvas"></canvas>
-            
-            <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">
-                <span>›</span>
-            </button>
 
-            <div class="sidebar" id="sidebar">
+            <div class="sidebar">
                 <div class="panel wave-info">
                     <div class="panel-title">波次信息</div>
                     <div class="wave-number" id="wave-num">0</div>
@@ -1392,18 +1221,6 @@
             document.querySelectorAll('.map-card').forEach(card => {
                 card.classList.remove('selected');
             });
-        }
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const toggle = document.getElementById('sidebar-toggle');
-            sidebar.classList.toggle('collapsed');
-            
-            if (sidebar.classList.contains('collapsed')) {
-                toggle.innerHTML = '<span>‹</span>';
-            } else {
-                toggle.innerHTML = '<span>›</span>';
-            }
         }
 
         function selectMap(mapIndex) {
