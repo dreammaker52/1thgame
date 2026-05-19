@@ -17,6 +17,7 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
+            min-width: 1200px;
         }
 
         .header {
@@ -85,10 +86,13 @@
             flex: 1;
             display: block;
             cursor: crosshair;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
         }
 
         .sidebar {
-            width: 320px;
+            width: 340px;
+            min-width: 340px;
             background: linear-gradient(180deg, rgba(20, 10, 40, 0.95), rgba(10, 20, 40, 0.95));
             border-left: 2px solid rgba(0, 255, 255, 0.3);
             padding: 15px;
@@ -96,6 +100,7 @@
             flex-direction: column;
             gap: 12px;
             overflow-y: auto;
+            flex-shrink: 0;
         }
 
         .panel {
@@ -1162,6 +1167,13 @@
         function drawMapPreviews() {
             MAPS.forEach((mapData, index) => {
                 const previewId = 'map' + (index + 1) + '-preview';
+                const previewDiv = document.getElementById(previewId);
+                
+                // 清除之前的 canvas
+                while (previewDiv.firstChild) {
+                    previewDiv.removeChild(previewDiv.firstChild);
+                }
+                
                 const previewCanvas = document.createElement('canvas');
                 previewCanvas.width = 200;
                 previewCanvas.height = 120;
@@ -1195,7 +1207,6 @@
                 
                 ctx.restore();
                 
-                const previewDiv = document.getElementById(previewId);
                 previewDiv.appendChild(previewCanvas);
             });
         }
@@ -1233,19 +1244,12 @@
             initTowerButtons();
             game.canvas.addEventListener('click', handleCanvasClick);
             game.canvas.addEventListener('mousemove', handleCanvasHover);
+            
+            // 显示游戏界面
+            document.getElementById('game-container').style.display = 'flex';
+            
             updateUI();
             requestAnimationFrame(gameLoop);
-        }
-
-        function restartGame() {
-            document.getElementById('game-over-screen').style.display = 'none';
-            document.getElementById('start-screen').style.display = 'flex';
-            selectedDifficulty = null;
-            document.querySelectorAll('.difficulty-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            document.getElementById('start-game-btn').disabled = true;
-            document.getElementById('start-game-btn').textContent = '请选择难度';
         }
 
         function getWaveDifficulty(waveNum) {
@@ -1616,12 +1620,21 @@
             }
         }
 
+        const TARGET_FPS = 120;
+        const FRAME_TIME = 1000 / TARGET_FPS;
+        let accumulator = 0;
+
         function gameLoop(timestamp) {
             const deltaTime = timestamp - game.lastTime;
             game.lastTime = timestamp;
 
-            if (!game.paused && !game.gameOver) {
-                update(deltaTime);
+            accumulator += deltaTime;
+
+            while (accumulator >= FRAME_TIME) {
+                if (!game.paused && !game.gameOver) {
+                    update(FRAME_TIME);
+                }
+                accumulator -= FRAME_TIME;
             }
 
             render();
@@ -1630,10 +1643,11 @@
 
         function update(deltaTime) {
             const now = Date.now();
+            const timeScale = deltaTime / FRAME_TIME;
 
             game.enemies.forEach(enemy => {
                 if (enemy.teleporting) {
-                    enemy.teleportProgress += 0.025;
+                    enemy.teleportProgress += 0.025 * timeScale;
                     
                     if (enemy.teleportProgress >= 1) {
                         enemy.teleporting = false;
@@ -1659,8 +1673,8 @@
                     if (dist < speed * 2) {
                         enemy.pathIndex++;
                     } else {
-                        enemy.x += (dx / dist) * speed;
-                        enemy.y += (dy / dist) * speed;
+                        enemy.x += (dx / dist) * speed * timeScale;
+                        enemy.y += (dy / dist) * speed * timeScale;
                     }
                 } else {
                     game.health--;
@@ -1751,8 +1765,8 @@
                         createParticles(proj.targetX, proj.targetY, proj.color, 12);
                     }
                 } else {
-                    proj.x += (dx / dist) * proj.speed;
-                    proj.y += (dy / dist) * proj.speed;
+                    proj.x += (dx / dist) * proj.speed * timeScale;
+                    proj.y += (dy / dist) * proj.speed * timeScale;
                 }
             });
 
@@ -1771,11 +1785,11 @@
             game.enemies = game.enemies.filter(e => e.health > 0 || !e.rewarded);
 
             game.particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
+                p.x += p.vx * timeScale;
+                p.y += p.vy * timeScale;
                 p.vx *= 0.94;
                 p.vy *= 0.94;
-                p.life--;
+                p.life -= timeScale;
             });
             game.particles = game.particles.filter(p => p.life > 0);
 
@@ -2543,6 +2557,68 @@
                 消灭敌人：${game.killedCount}
             `;
         }
+
+        function restartGame() {
+            document.getElementById('game-over-screen').style.display = 'none';
+            document.getElementById('game-container').style.display = 'none';
+            document.getElementById('start-screen').style.display = 'flex';
+            
+            selectedDifficulty = null;
+            selectedMap = null;
+            
+            document.querySelectorAll('.difficulty-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelectorAll('.map-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.getElementById('start-game-btn').disabled = true;
+            document.getElementById('start-game-btn').textContent = '请选择难度';
+            document.getElementById('start-game-from-map-btn').disabled = true;
+            document.getElementById('start-game-from-map-btn').textContent = '请选择地图';
+            
+            game.canvas = null;
+            game.ctx = null;
+            game.credits = 500;
+            game.health = 20;
+            game.maxHealth = 20;
+            game.score = 0;
+            game.wave = 0;
+            game.waveInProgress = false;
+            game.resupplyCountdown = 0;
+            game.gameOver = false;
+            game.victory = false;
+            game.selectedTowerType = null;
+            game.selectedTower = null;
+            game.towers = [];
+            game.enemies = [];
+            game.projectiles = [];
+            game.particles = [];
+            game.grid = [];
+            game.path = [];
+            game.spawnQueue = [];
+            game.totalEnemiesInWave = 0;
+            game.spawnedCount = 0;
+            game.killedCount = 0;
+            game.difficulty = null;
+            game.paused = false;
+            game.portalAngle = 0;
+            game.portalParticles = [];
+            game.baseShieldIntensity = 1;
+            game.currentMap = 0;
+        }
+
+        // 初始化游戏
+        document.addEventListener('DOMContentLoaded', () => {
+            // 确保开始界面显示正确
+            document.getElementById('start-screen').style.display = 'flex';
+            document.getElementById('map-select-screen').style.display = 'none';
+            document.getElementById('game-container').style.display = 'none';
+            document.getElementById('game-over-screen').style.display = 'none';
+            
+            // 添加塔卡片
+            createTowerCards();
+        });
     </script>
 </body>
 </html>
