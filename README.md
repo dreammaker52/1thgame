@@ -6,13 +6,14 @@
   <title>AI 陪聊</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body, #app { height: 100%; width: 100%; }
+    html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #0f0f0f;
       color: #e5e5e5;
-      overflow: hidden;
+      overflow-x: hidden;
     }
+    #app { height: 100%; width: 100%; position: relative; }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #1a1a1a; }
     ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 3px; }
@@ -75,9 +76,17 @@
     .login-box .link:hover { color: #9ca3af; }
 
     /* Chat Screen */
-    .chat-screen { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+    .chat-screen {
+      height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
     .chat-header {
       flex-shrink: 0;
+      width: 100%;
       padding: 12px 16px;
       background: #1a1a1a;
       border-bottom: 1px solid #374151;
@@ -90,13 +99,24 @@
     .chat-header-status { display: flex; align-items: center; gap: 8px; }
     .status-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
     .chat-header-status span { font-size: 13px; color: #9ca3af; }
-    .chat-messages {
+    .chat-messages-wrapper {
       flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+    .chat-messages {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       overflow-y: auto;
       overflow-x: hidden;
       padding: 16px;
+      padding-bottom: 80px;
       -webkit-overflow-scrolling: touch;
       scroll-behavior: smooth;
+      overscroll-behavior-y: contain;
     }
     .chat-empty { text-align: center; padding: 48px 0; color: #6b7280; }
     .message {
@@ -149,12 +169,15 @@
     @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
     .chat-input-area {
       flex-shrink: 0;
+      width: 100%;
       padding: 16px;
       background: #1a1a1a;
       border-top: 1px solid #374151;
-      position: sticky;
+      position: fixed;
       bottom: 0;
-      z-index: 10;
+      left: 0;
+      right: 0;
+      z-index: 100;
     }
     .chat-input-form { display: flex; gap: 12px; max-width: 800px; margin: 0 auto; }
     .chat-input-form .input { flex: 1; }
@@ -503,9 +526,11 @@
               <span>在线</span>
             </div>
           </div>
-          <div class="chat-messages" id="chat-messages">
-            ${state.messages.length === 0 ? '<div class="chat-empty">开始聊天吧！</div>' : ''}
-            ${state.messages.map(m => renderMessage(m)).join('')}
+          <div class="chat-messages-wrapper">
+            <div class="chat-messages" id="chat-messages">
+              ${state.messages.length === 0 ? '<div class="chat-empty">开始聊天吧！</div>' : ''}
+              ${state.messages.map(m => renderMessage(m)).join('')}
+            </div>
           </div>
           <div class="chat-input-area">
             <form class="chat-input-form" id="chat-form">
