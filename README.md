@@ -75,7 +75,7 @@
     .login-box .link:hover { color: #9ca3af; }
 
     /* Chat Screen */
-    .chat-screen { height: 100%; display: flex; flex-direction: column; }
+    .chat-screen { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
     .chat-header {
       flex-shrink: 0;
       padding: 12px 16px;
@@ -90,9 +90,23 @@
     .chat-header-status { display: flex; align-items: center; gap: 8px; }
     .status-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
     .chat-header-status span { font-size: 13px; color: #9ca3af; }
-    .chat-messages { flex: 1; overflow-y: auto; padding: 16px; }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 16px;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
     .chat-empty { text-align: center; padding: 48px 0; color: #6b7280; }
-    .message { display: flex; gap: 12px; margin-bottom: 16px; animation: fadeIn 0.3s ease-out; }
+    .message {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      animation: fadeIn 0.3s ease-out;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
     .message.user { flex-direction: row-reverse; }
     .message-avatar {
       width: 36px; height: 36px; border-radius: 50%;
@@ -104,10 +118,13 @@
     .message.admin .message-avatar { background: #eab308; color: black; }
     .message-content {
       max-width: 75%;
+      min-width: 0;
       padding: 12px 16px;
       border-radius: 12px;
       font-size: 14px;
       line-height: 1.5;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
     .message.user .message-content {
       background: rgba(99, 102, 241, 0.2);
@@ -135,10 +152,13 @@
       padding: 16px;
       background: #1a1a1a;
       border-top: 1px solid #374151;
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
     }
     .chat-input-form { display: flex; gap: 12px; max-width: 800px; margin: 0 auto; }
     .chat-input-form .input { flex: 1; }
-    .admin-link { position: fixed; bottom: 16px; right: 16px; color: #6b7280; font-size: 12px; text-decoration: none; }
+    .admin-link { position: fixed; bottom: 16px; right: 16px; color: #6b7280; font-size: 12px; text-decoration: none; z-index: 20; }
     .admin-link:hover { color: #9ca3af; }
 
     /* Admin Screen */
@@ -191,8 +211,8 @@
     .catchphrase-tag button { background: none; border: none; color: inherit; cursor: pointer; font-size: 14px; line-height: 1; }
 
     /* Chat History */
-    .chat-history { display: flex; height: 100%; }
-    .session-list { width: 280px; border-right: 1px solid #374151; overflow-y: auto; }
+    .chat-history { display: flex; height: 100%; overflow: hidden; }
+    .session-list { width: 280px; border-right: 1px solid #374151; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
     .session-list-header { padding: 16px; border-bottom: 1px solid #374151; }
     .session-list-header h3 { font-size: 14px; color: #9ca3af; }
     .session-item { padding: 16px; border-bottom: 1px solid #374151; cursor: pointer; transition: background 0.2s; }
@@ -200,13 +220,31 @@
     .session-item.active { background: #0f0f0f; border-left: 3px solid #6366f1; }
     .session-name { font-weight: 500; font-size: 14px; }
     .session-meta { display: flex; justify-content: space-between; font-size: 12px; color: #6b7280; margin-top: 4px; }
-    .chat-detail { flex: 1; padding: 20px; overflow-y: auto; }
-    .chat-detail-header { margin-bottom: 20px; }
+    .chat-detail {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-detail-inner {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+    .chat-detail-header { margin-bottom: 20px; flex-shrink: 0; }
     .chat-detail-header h3 { font-size: 16px; font-weight: 600; }
-    .takeover-form { display: flex; gap: 8px; margin-bottom: 20px; }
+    .takeover-form { display: flex; gap: 8px; margin-bottom: 20px; flex-shrink: 0; }
     .takeover-form .input { flex: 1; }
-    .message-list { display: flex; flex-direction: column; gap: 12px; }
-    .message-item { padding: 12px; border-radius: 8px; }
+    .message-list { display: flex; flex-direction: column; gap: 12px; max-width: 100%; }
+    .message-item {
+      padding: 12px;
+      border-radius: 8px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
     .message-item.user-msg { background: rgba(244, 114, 182, 0.1); margin-left: 20px; }
     .message-item.ai-msg { background: rgba(99, 102, 241, 0.1); margin-right: 20px; }
     .message-item.admin-msg { background: rgba(234, 179, 8, 0.1); margin-left: 20px; }
@@ -236,6 +274,16 @@
       .session-list { width: 100%; }
       .chat-history { flex-direction: column; }
       .form-row { grid-template-columns: 1fr; }
+      .chat-messages {
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: contain;
+      }
+      .message-content {
+        max-width: 85%;
+      }
+      body {
+        overscroll-behavior-y: none;
+      }
     }
   </style>
 </head>
@@ -567,16 +615,18 @@
           <input type="text" class="input" id="takeover-input" placeholder="输入接管回复...">
           <button class="btn btn-yellow" id="takeover-btn">接管</button>
         </div>
-        <div class="message-list">
-          ${(s.messages || []).map(m => `
-            <div class="message-item ${m.role === 'user' ? 'user-msg' : m.role === 'admin' ? 'admin-msg' : 'ai-msg'}">
-              <div class="message-item-header">
-                <span>${m.role === 'user' ? s.visitorName : m.role === 'admin' ? '管理员接管' : 'AI'}</span>
-                <span>${formatTime(m.createdAt)}</span>
+        <div class="chat-detail-inner">
+          <div class="message-list">
+            ${(s.messages || []).map(m => `
+              <div class="message-item ${m.role === 'user' ? 'user-msg' : m.role === 'admin' ? 'admin-msg' : 'ai-msg'}">
+                <div class="message-item-header">
+                  <span>${m.role === 'user' ? s.visitorName : m.role === 'admin' ? '管理员接管' : 'AI'}</span>
+                  <span>${formatTime(m.createdAt)}</span>
+                </div>
+                <div class="message-item-content">${escapeHtml(m.content)}</div>
               </div>
-              <div class="message-item-content">${escapeHtml(m.content)}</div>
-            </div>
-          `).join('')}
+            `).join('')}
+          </div>
         </div>
       `;
     }
