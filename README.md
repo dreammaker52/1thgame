@@ -346,7 +346,7 @@
       config: {
         adminPassword: '123123',
         persona: { ...DEFAULT_PERSONA },
-        modelConfig: { apiUrl: '', apiKey: 'sk-8be5361029ae4233a434791b72175397', model: 'gpt-4o-mini' },
+        modelConfig: { apiUrl: 'https://api.deepseek.com/v1/chat/completions', apiKey: 'sk-8be5361029ae4233a434791b72175397', model: 'deepseek-chat' },
         serviceEnabled: true,
         bannedUsers: []
       }
