@@ -181,8 +181,8 @@
     }
     .chat-input-form { display: flex; gap: 12px; max-width: 800px; margin: 0 auto; }
     .chat-input-form .input { flex: 1; }
-    .admin-link { position: fixed; bottom: 16px; right: 16px; color: #6b7280; font-size: 12px; text-decoration: none; z-index: 20; }
-    .admin-link:hover { color: #9ca3af; }
+    .admin-link { position: fixed; bottom: 80px; right: 16px; color: #00ffff; font-size: 14px; text-decoration: none; z-index: 200; background: rgba(26, 26, 26, 0.9); padding: 10px 16px; border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 20px; box-shadow: 0 0 15px rgba(0, 255, 255, 0.2); }
+    .admin-link:hover { color: #818cf8; border-color: rgba(129, 140, 248, 0.5); }
 
     /* Admin Screen */
     .admin-screen { height: 100%; display: flex; }
@@ -344,9 +344,9 @@
       sessions: [],
       selectedSession: null,
       config: {
-        adminPassword: 'admin123',
+        adminPassword: '123123',
         persona: { ...DEFAULT_PERSONA },
-        modelConfig: { apiUrl: '', apiKey: '', model: 'gpt-4o-mini' },
+        modelConfig: { apiUrl: '', apiKey: 'sk-8be5361029ae4233a434791b72175397', model: 'gpt-4o-mini' },
         serviceEnabled: true,
         bannedUsers: []
       }
